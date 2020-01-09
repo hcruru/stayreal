@@ -27,6 +27,12 @@ Html和CSS的关系
 
 <img src="C:\Users\jimmy\AppData\Roaming\Typora\typora-user-images\image-20200107103212601.png" alt="image-20200107103212601" style="zoom: 50%;" align="left" />
 
+\<head>定义文档头部
+
+\<title>\<script>\<style>\<link>\<meta>等为头部元素
+
+\<body>标签之间是网页的主要内容
+
 ## 语义化
 
 即明白每个标签的用途。
@@ -116,3 +122,23 @@ Html和CSS的关系
 #### div
 
 - **\<div>**标签，相当于一个容器，可以把一些独立的逻辑部分划分出来，使用\<div>作为容器。
+
+
+
+#### table
+
+- **\<tbody>…\</tbody>**：如果不加\<thead>\<tbody>\<tfooter> , table表格加载完后才显示。加上这些表格结构， tbody包含行的内容下载完优先显示，不必等待表格结束后在显示，同时如果表格很长，用tbody分段，可以一部分一部分地显示。（通俗理解table 可以按结构一块块的显示，不在等整个表格加载完后显示。）
+  - \<tr>…\</tr>：表格的一行
+  - \<td>…\</td>：表格的一个单元格(有几格就有几列)
+  - \<th>…\</th>：表格的头部的一个单元格，**表格表头**
+- \<table summary="表格简介文本">
+- \<caption>标题文本\</caption>
+
+
+
+
+
+
+
+
+
