@@ -2,8 +2,6 @@
 
 Html和CSS的关系
 
-
-
 1. **HTML是网页内容的载体**。内容就是网页制作者放在页面上想要让用户浏览的信息，可以包含文字、图片、视频等。
 2.  **CSS样式是表现**。就像网页的外衣。比如，标题字体、颜色变化，或为标题加入背景图片、边框等。所有这些用来改变内容外观的东西称之为表现。
 3. **JavaScript是用来实现网页上的特效效果**。如：鼠标滑过弹出下拉菜单。或鼠标滑过表格的背景颜色改变。还有焦点新闻（新闻图片）的轮换。可以这么理解，有动画的，有交互的一般都是用JavaScript来实现的。
@@ -127,18 +125,157 @@ Html和CSS的关系
 
 #### table
 
+
+
 - **\<tbody>…\</tbody>**：如果不加\<thead>\<tbody>\<tfooter> , table表格加载完后才显示。加上这些表格结构， tbody包含行的内容下载完优先显示，不必等待表格结束后在显示，同时如果表格很长，用tbody分段，可以一部分一部分地显示。（通俗理解table 可以按结构一块块的显示，不在等整个表格加载完后显示。）
   - \<tr>…\</tr>：表格的一行
   - \<td>…\</td>：表格的一个单元格(有几格就有几列)
   - \<th>…\</th>：表格的头部的一个单元格，**表格表头**
+  
 - \<table summary="表格简介文本">
+
 - \<caption>标题文本\</caption>
 
+  
+
+#### \<a>
+
+- 实现超链接
+- \<a href="目标网址"  title="鼠标滑过显示的文本">链接显示的文本\</a>
+- 添加 **target="_blank"**可以在新窗口打开
+- 链接Email地址
+  - <img src="http://img.mukewang.com/52da4f2a000150b714280550.jpg">
+  - 如果mailto后面同时有多个参数的话，第一个参数必须以“?”开头，后面的参数每一个都以“&”分隔
+
+#### \<img>
+
+- \<img src="图片地址" alt="下载失败时的替换文本" title = "提示文本">
+
+- 1、src：标识图像的位置；
+
+  2、alt：指定图像的描述性文本，当图像不可见时（下载不成功时），可看到该属性指定的文本；
+
+  3、title：提供在图像可见时对图像的描述(鼠标滑过图片时显示的文本)；
+
+  4、图像可以是GIF，PNG，JPEG格式的图像文件。
+
+  
+
+#### 表单标签
+
+- 使用表单标签，与用户交互。
+
+- 表单：把浏览者输入的数据传送到服务器端，这样服务器端程序就可以处理表单传过来的数据。
+
+- \<form   method="传送方式"   action="服务器文件">
+
+  1.\<form> ：\<form>标签是成对出现的，以\<form>开始，以\</form>结束。
+
+  2.action ：浏览者输入的数据被传送到的地方,比如一个PHP页面(save.php)。
+
+  3.method ： 数据传送的方式（get/post）。
+
+- 文本输入框、密码输入框
+
+  \<input type="text/password" name="名称" value="文本" />
+
+  1、type：
+
+     当type="text"时，输入框为文本输入框;
+
+     当type="password"时, 输入框为密码输入框。
+
+  2、name：为文本框命名，以备后台程序ASP 、PHP使用。
+
+  3、value：为文本输入框设置默认值。(一般起到提示作用)
+
+- 文本域，支持多行文字输入
+
+  \<textarea  rows="行数" cols="列数">文本\</textarea>
+
+  1、\<textarea>标签是成对出现的，以\<textarea>开始，以\</textarea>结束。
+
+  2、cols ：多行输入域的列数。
+
+  3、rows ：多行输入域的行数。
+
+  4、在\<textarea>\</textarea>标签之间可以输入默认值。
+
+- 单选框、复选框
+
+  \<input   type="radio/checkbox"   value="值"    name="名称"   checked="checked"/>
+
+  1、type:
+
+     当 type="radio" 时，控件为单选框
+
+     当 type="checkbox" 时，控件为复选框
+
+  2、value：提交数据到服务器的值（后台程序PHP使用）
+
+  3、name：为控件命名，以备后台程序 ASP、PHP 使用
+
+  4、checked：当设置 checked="checked" 时，该选项被默认选中
+
+- 下拉列表框
+
+  <form action="save.php" method="post" >
+      <label>爱好:</label>
+      <select>
+        <option value="看书">看书</option>
+        <option value="旅游" selected="selected">旅游</option>//旅游作为默认选项被选中
+        <option value="运动">运动</option>
+        <option value="购物">购物</option>
+      </select>
+  </form>
+
+  - 使下拉列表框进行多选：在select标签中设置multiple="multiple"属性
+
+- 提交按钮，提交数据。
+
+  - \<input   type="submit"   value="提交">
+
+  只有type值设置为submit，按钮才有提交作用；value为按钮上显示的文字。
+
+- 重置按钮，重置表单信息。
+  - \<input   type="reset"   value="重置">
+
+##### lable标签
+
+- label标签不会向用户呈现任何特殊效果，它的作用是为鼠标用户改进了可用性。如果你在 label 标签内点击文本，就会触发此控件。就是说，当用户单击选中该label标签时，浏览器就会自动将焦点转到和标签相关的表单控件上（就自动选中和该label标签相关连的表单控件上）。
+
+- \<label for="控件id名称">  【注意】标签的 for 属性中的值应当与相关控件的 id 属性值一定要相同。
+
+  
+
+## CSS样式
+
+CSS：层叠样式表Cascading Style Sheets，它主要是用于定义HTML内容在浏览器内的显示样式，如文字大小、颜色、字体加粗等。
+
+-  css 样式由**选择符**和**声明**组成，而**声明**又由**属性**和**值**组成
+
+  <img src="http://img.mukewang.com/52fde5c30001b0fe03030117.jpg" align="left">
+
+  - **选择符：**又称选择器，指明网页中要应用样式规则的元素，如本例中是网页中所有的段（p）的文字将变成蓝色，而其他的元素（如ol）不会受到影响。
+  - **声明：**在英文大括号“｛｝”中的的就是声明，属性和值之间用英文冒号“：”分隔。当有多条声明时，中间可以英文分号“;”分隔
+
+- CSS注释代码 使用 /*注释语句 */  ，Html中使用\<!--注释-->
 
 
 
+- CSS的样式
+
+  - 内联式——CSS样式表就是把css代码直接写在现有的HTML标签中，如：
+
+    \<p style="color:red">这里文字是红色。\</p>
+
+    - CSS样式要写再“ ”中，多条CSS样式代码写在一起,用分号隔开。
+
+  - 嵌入式
+
+  - 外部式
 
 
 
-
+ 
 
