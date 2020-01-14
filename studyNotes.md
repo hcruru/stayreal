@@ -449,3 +449,58 @@ CSS：层叠样式表Cascading Style Sheets，它主要是用于定义HTML内容
   - 这里注意当网页制作者不设置css样式时，浏览器会按照自己的一套样式来显示网页。并且用户也可以在浏览器中设置自己习惯的样式，比如有的用户习惯把字号设置为大一些，使其查看网页的文本更加清楚。这时注意样式优先级为：浏览器默认的样式 < 网页制作者样式 < 用户自己设置的样式，但记住!important优先级样式是个例外，权值高于用户自己设置的样式。
 
     
+
+## CSS格式化排版
+
+### 文字排版
+
+#### 字体
+
+- body{font-family:"Microsoft Yahei";} 设置字体为微软雅黑
+
+####  字号、颜色
+
+- body{font-size:12px; color:blue;}
+
+#### 粗体
+
+- font-weight:bold;
+
+#### 斜体
+
+- font-style:italic;
+
+#### 下划线
+
+- text-decoration:underline;
+
+#### 删除线
+
+- text-decoration:line-through;
+
+### 段落排版
+
+#### 缩进
+
+- text-indent:2em;
+  - 2em的意思就是文字的2倍大小。
+
+#### 行间距（行高）
+
+- line-height:1.5em;      这里设置行间距为1.5倍。
+
+#### 中文字间距、字母间距
+
+- 中文字间隔、字母间隔：
+
+  letter-spacing:50px;   设置文字间隔或者字母间隔为50px。
+
+- 单词间距设置：
+
+  word-spacing:50px;   设置英文单词之间间距为50px。
+
+#### 对齐
+
+- 为块状元素的文本、图片设置居中样式: text-align:center;
+  - center居中，left居左，right居右。
+
