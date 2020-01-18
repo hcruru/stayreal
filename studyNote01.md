@@ -1318,6 +1318,31 @@ css代码：
 
 - 这种方法的好处是不用添加多余的无意义的标签，但缺点也很明显，它的兼容性不是很好，不兼容 IE6、7而且这样修改display的block变成了table-cell，破坏了原有的块状元素的性质。
 
+  html代码：
+
+  ```html
+  <div class="container">
+      <div>
+          <p>看我是否可以居中。</p>
+          <p>看我是否可以居中。</p>
+          <p>看我是否可以居中。</p>
+      </div>
+  </div>
+  ```
+
+  css代码：
+
+  ```css
+  <style>
+  .container{
+      height:300px;
+      background:#ccc;
+      display:table-cell;/*IE8以上及Chrome、Firefox*/
+      vertical-align:middle;/*IE8以上及Chrome、Firefox*/
+  }
+  </style>
+  ```
+
 ## 隐性改变display类型
 
 - 当为元素（不论之前是什么类型元素，display:none 除外）设置以下 2 个句之一：
@@ -1327,3 +1352,30 @@ css代码：
   2. float : left 或 [float:right](http://www.imooc.com/code/2071) 
 
   简单来说，只要html代码中出现以上两句之一，元素的display显示类型就会自动变为以 display:inline-block（[块状元素](http://www.imooc.com/code/2048)）的方式显示，当然就可以设置元素的 width 和 height 了，且默认宽度不占满父元素。
+
+-  a 标签是 [行内元素](http://www.imooc.com/code/2049) ，所以设置它的 width 是 没有效果的，但是设置为 position:absolute 以后，就可以了。
+
+- html代码：
+
+  ```html
+  <div class="container">
+      <div>
+          <p>看我是否可以居中。</p>
+          <p>看我是否可以居中。</p>
+          <p>看我是否可以居中。</p>
+      </div>
+  </div>
+  ```
+
+  css代码：
+
+  ```css
+  <style>
+  .container{
+      height:300px;
+      background:#ccc;
+      display:table-cell;/*IE8以上及Chrome、Firefox*/
+      vertical-align:middle;/*IE8以上及Chrome、Firefox*/
+  }
+  </style>
+  ```
