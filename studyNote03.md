@@ -85,3 +85,27 @@
 ### JS-输出内容
 
 - document.write可用于直接向HTML输出流写内容，即直接在网页中输出内容。
+
+- 第一种：输出内容用""括起，直接输出""号内的内容。
+
+  document.write("I love JavaScript！");
+
+- 第二种：通过变量，输出内容
+
+  var mystr="hello world!";
+
+  document.write(mystr);
+
+- 第三种：输出多项内容，内容之间用+号连接
+
+  var mystr="hello";
+
+  document.write(mystr+"I love JavaScript");
+
+- 第四种：输出HTML标签，并起作用，标签使用""括起来。
+
+  var mystr="hello";
+
+  document.write(mystr+"\<br>");  //输出hello后，输出一个换行符
+
+  document.write("JavaScript");
