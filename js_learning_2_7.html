@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title> new document </title>  
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>   
+  <script type="text/javascript">  
+    function openWindow(){
+    var message=confirm("是否打开新窗口");// 新窗口打开时弹出确认框，是否打开
+    if(message==true){
+        var inputStr = prompt("请输入你要打开的网址",inputStr);
+        var webAdd = inputStr || "http://www.imooc.com/";
+        if(webAdd!==null){
+            window.open(webAdd,'_blank','width=400,height=500,menubar=no,toolbar=no');
+        }
+    }   
+    // 通过输入对话框，确定打开的网址，默认为 http：//www.imooc.com/
+    //打开的窗口要求，宽400像素，高500像素，无菜单栏、无工具栏。
+    
+    /*有点小问题，不知道怎么将网页对话框中的输入框设置默认网址；
+    目前这个网页达到的效果是，输入框是空白，按照用户输入的网址就可以按照其网址打开，
+    默认的效果是,什么网址都没输入直接点确定,就可以打开设置的默认网址imooc.com*/
+}
+  </script> 
+ </head> 
+ <body> 
+	  <input type="button" value="新窗口打开网站" onclick="openWindow()" /> 
+ </body>
+</html>
