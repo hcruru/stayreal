@@ -178,7 +178,7 @@
 
   - URL:可选参数，在窗口中要显示的网页的网址或路径。
 
-  如果省略这个参数，或者它的值是空字符串，那么窗口就显示任何文档。
+    如果省略这个参数，或者它的值是空字符串，那么窗口就显示任何文档。
 
   - 窗口名称：可选参数，被打开窗口的名称。
 
@@ -190,4 +190,40 @@
     - _self:在当前窗口显示目标网页
     - _top:框架网页中在上部窗口中显示目标网页
 
-    3.相同
+    3.相同name的窗口只能创建一个，想要创建多个窗口则name不能相同。
+    
+    4.name不能包含含有空格。
+  
+  - 参数字符串：可选参数，设置窗口参数，各参数用逗号隔开。
+  
+  - 参数表：
+  
+    <img src="http://img1.sycdn.imooc.com/52e3677900013d6a05020261.jpg">
+
+- 例：
+
+  window.open('http://www.imooc.com','_blank','width=300,height=200,menubar=no,toolbar=no, status=no,scrollbars=yes')
+
+  注意：运行结果考虑浏览器兼容问题。
+
+  ### JS-关闭窗口（window.close）
+
+- close()
+
+- 用法:
+
+  window.close();     或      \<窗口对象>.close();
+
+  例如：关闭新建的窗口。
+
+  var mywin=window.open('http://www.imooc.com');
+
+  mywin.close();
+
+- 注意:上面代码在打开新窗口的同时，关闭该窗口，看不到被打开的窗口。
+
+## DOM
+
+- 文档对象模型DOM(Document Object Model)定义访问和处理HTML文档的标准方法。
+
+  DOM将HTML文档呈现为带有元素、属性和文本的树结构（节点树）。
