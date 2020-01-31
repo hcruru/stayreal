@@ -470,7 +470,7 @@
    }
   ```
 
-## Do...while循环
+### Do...while循环
 
 - do while结构的基本原理和while结构是基本相同的，但是它保证循环体至少被执行一次。因为它是先执行代码，后判断条件，如果条件为真，继续循环。
 
@@ -513,3 +513,267 @@
    循环代码
   }
   ```
+
+## 函数
+
+- 函数的作用，可以写一次代码，然后反复地重用这个代码。
+
+- 如果要实现8组数的和，就需要16行代码，实现的越多，代码行也就越多。所以我们可以把完成特定功能的代码块放到一个函数里，直接调用这个函数，就省去重复输入大量代码的麻烦。
+
+  **使用函数完成:**
+
+  ```javascript
+  function add2(a,b){
+  sum = a + b;
+   alert(sum);
+  } //  只需写一次就可以
+  
+  add2(3,2);
+  add2(7,8);
+  ....  //只需调用函数就可以
+  ```
+
+### 定义函数
+
+- ```javascript
+  function  函数名( )
+  {
+       函数体;
+  }
+  ```
+
+### 函数调用
+
+- 函数定义好后，是不能自动执行的，需要调用它,直接在需要的位置写函数名。
+
+  **第一种情况:在标签内调用。**
+
+  ```javascript
+    <script type="text/javascript">
+      function add2()
+      {
+           sum = 1 + 1;
+           alert(sum);
+      }
+    add2();//调用函数，直接写函数名。
+  </SCRIPT>
+  ```
+
+  **第二种情况:**在HTML文件中调用，如通过点击按钮后调用定义好的函数。
+
+  ```javascript
+  <html>
+  <head>
+  <script type="text/javascript">
+     function add2()
+     {
+           sum = 5 + 6;
+           alert(sum);
+     }
+  </script>
+  </head>
+  <body>
+  <form>
+  <input type="button" value="click it" onclick="add2()">  //按钮,onclick点击事件，直接写函数名
+  </form>
+  </body>
+  </html>
+  ```
+
+### 有参数的函数
+
+- 定义函数还可以如下格式：
+
+  ```javascript
+  function 函数名(参数1,参数2)
+  {
+       函数代码
+  }
+  ```
+
+  **注意:参数可以多个，根据需要增减参数个数。参数之间用(逗号，）隔开。**
+
+  按照这个格式，函数实现任意两个数的和应该写成：
+
+  ```javascript
+  function add2(x,y)
+  {
+     sum = x + y;
+     document.write(sum);
+  }
+  ```
+
+  x和y则是函数的两个参数，调用函数的时候，我们可通过这两个参数把两个实际的加数传递给函数了。
+
+  例如，add2(3，4)会求3+4的和，add2(60,20)则会求出60和20的和。
+
+### 返回值的函数
+
+- ```javascript
+  function add2(x,y)
+  {
+     sum = x + y;
+     return sum; //返回函数值,return后面的值叫做返回值。
+  }
+  ```
+
+- 还可以通过变量存储调用函数的返回值，代码如下:
+
+  ```javascript
+  result = add2(3,4);//语句执行后,result变量中的值为7。
+  ```
+
+  **注意:函数中参数和返回值不只是数字，还可以是字符串等其它类型。** 
+
+## 事件响应
+
+- JavaScript 创建动态页面。事件是可以被 JavaScript 侦测到的行为。网页中的每个元素都可以产生某些可以触发 JavaScript 函数或程序的事件。
+
+  比如说，当用户单击按钮或者提交表单数据时，就发生一个鼠标单击（onclick）事件，需要浏览器做出处理，返回给用户一个结果。
+
+- 主要事件表：
+
+  <img src="http://img.mukewang.com/53e198540001b66404860353.jpg">
+
+### 鼠标单击事件( onclick ）
+
+- onclick是鼠标单击事件，当在网页上单击鼠标时，就会发生该事件。同时onclick事件调用的程序块就会被执行，通常与按钮一起使用。
+
+- 比如，我们单击按钮时，触发 onclick 事件，并调用两个数和的函数add2()。代码如下：
+
+  ```javascript
+  <html>
+  <head>
+     <script type="text/javascript">
+        function add2(){
+          var numa,numb,sum;
+          numa=6;
+          numb=8;
+          sum=numa+numb;
+          document.write("两数和为:"+sum);  }
+     </script>
+  </head>
+  <body>
+     <form>
+        <input name="button" type="button" value="点击提交" onclick="add2()" />
+     </form>
+  </body>
+  </html>
+  ```
+
+  **注意:** 在网页中，如使用事件，就在该元素中设置事件属性。 
+
+### 鼠标经过事件（onmouseover）
+
+- 鼠标经过事件，当鼠标移到一个对象上时，该对象就触发onmouseover事件，并执行onmouseover事件调用的程序。
+
+- 例：
+
+  鼠标经过"确定"按钮时，触发onmouseover事件，调用函数info()，弹出消息框，代码如下:
+
+  <img src="http://img.mukewang.com/53e196e500013f1807700354.jpg">
+
+  运行结果：
+
+  <img src="http://img.mukewang.com/53e196fd00017d8704870416.jpg">
+
+### 鼠标移开事件（onmouseout）
+
+- 鼠标移开事件，当鼠标移开当前对象时，执行onmouseout调用的程序。
+
+- 例：
+
+  当把鼠标移动到"登录"按钮上，然后再移开时，触发onmouseout事件，调用函数message()，代码如下:
+
+  <img src="http://img.mukewang.com/53e195580001a0bc07730356.jpg">
+
+  运行结果：
+
+  <img src="http://img.mukewang.com/53e195bf00010d1804760385.jpg">
+
+### 光标聚焦事件（onfocus）
+
+- 当网页中的对象获得聚点时，执行onfocus调用的程序就会被执行。
+
+- 例：
+
+  将光标移到文本框内时，即焦点在文本框内，触发onfocus 事件，并调用函数message()。
+
+  <img src="http://img.mukewang.com/53e19337000113d108390338.jpg">
+
+  运行结果：
+
+  <img src="http://img.mukewang.com/5312c5660001821a04300326.jpg">
+
+### 失焦事件（onblur）
+
+- onblur事件与onfocus是相对事件，当光标离开当前获得聚焦对象的时候，触发onblur事件，同时执行被调用的程序。
+
+- eg:
+
+  网页中有用户和密码两个文本框。当前光标在用户文本框内时（即焦点在文本框），在光标离开该文本框后（即失焦时），触发onblur事件，并调用函数message()。
+
+  <img src="http://img.mukewang.com/53e191d00001dfe508560326.jpg">
+
+  <img src="http://img.mukewang.com/5312da710001968704410319.jpg">
+
+### 内容选中事件（onselect）
+
+- 选中事件，当文本框或者文本域中的文字被选中时，触发onselect事件，同时调用的程序就会被执行。
+
+- eg:
+
+  当选中用户文本框内的文字时，触发onselect 事件，并调用函数message()。
+
+  <img src="http://img.mukewang.com/53e190b70001ffa908560325.jpg">
+
+  <img src="http://img.mukewang.com/5312d7ba00013fff03950319.jpg">
+
+### 文本框内容改变事件（onchange）
+
+- 通过改变文本框的内容来触发onchange事件，同时执行被调用的程序。
+
+- eg:
+
+  当用户将文本框内的文字改变后，弹出对话框“您改变了文本内容！”。
+
+  <img src="http://img.mukewang.com/5312d59c00011cd311490444.jpg">
+
+  <img src="http://img.mukewang.com/5312d5c600012c3703960319.jpg">
+
+### 加载事件（onload）
+
+- 事件会在页面加载完成后，立即发生，同时执行被调用的程序。
+  注意：
+
+  1. 加载页面时，触发onload事件，事件写在\<body>标签内。
+
+  2. 此节的加载页面，可理解为打开一个新页面时。
+
+- eg:当加载一个新页面时，弹出对话框“加载中，请稍等…”。
+
+  <img src="http://img.mukewang.com/5312e3c10001bd9908920372.jpg">
+
+  <img src="http://img.mukewang.com/5312e3eb0001e8a103930318.jpg">
+
+### 卸载事件（onunload）
+
+- 当用户退出页面时（页面关闭、页面刷新等），触发onUnload事件，同时执行被调用的程序。
+
+  **注意：不同浏览器对onunload事件支持不同。**
+
+- eg:
+
+  当退出页面时，弹出对话框“您确定离开该网页吗？”。
+
+  <img src="http://img.mukewang.com/5312ee6b0001f89408950418.jpg">
+
+  <img src="http://img.mukewang.com/546470c90001583205460464.jpg">
+
+- 个人记录：
+
+  这里实际操作过程中有个问题：
+
+  刷新进入网站会显示弹窗，但是关闭页面时不会显示，评论中给的解答是这样的：
+
+  <img src="https://img1.mukewang.com/5b2224b800019fa105000451.jpg">
