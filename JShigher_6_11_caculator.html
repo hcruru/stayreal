@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title> 事件</title>  
+  <script type="text/javascript">
+   function count(){
+       
+    //获取第一个输入框的值
+    var num1=document.getElementById("txt1").value;
+	//获取第二个输入框的值
+	var num2=document.getElementById("txt2").value;
+	//获取选择框的值
+	var opt = document.getElementById("select").value;
+	//获取通过下拉框来选择的值来改变加减乘除的运算法则
+	var answer = document.getElementById("fruit").value;  
+    // 出现的问题1:这个语句设置在这里，因为解析是由上至下，
+    //所以此处设置的getElementById只是给answer赋值，而answer值改变了并没有使fruit.value改变；导致点击=号第三个框没有答案
+    //解决办法：还要加一个给value赋值的语句
+	//问题2：处理了问题1后得出的结果是 直接将两个数字连接起来而不是进行计算，因为得到的是字符串而不是数字
+    //但是除了+法，其它的运算都可以进行：因为没有把获取的值由字符串转为number，如果是字符串遇上“+”的话就是拼接的意思，所以会吧1和2拼接在一起
+    //解决办法 ：使用parseInt()函数可解析一个字符串,并返回一个整数。
+    //问题3：给txt1,txt2设置的value都是1，2，导致无论如何输入值都是1，2；说明没有理解到这个语法的示范，应该自己设置变量然后赋值；
+    //问题4：将if...else语句改为写switch语句发现自己的问题是，每一个case后没有写break，导致所有语句都是最后一个case的答案（因为从上至下）
+    if(opt=="+"){
+	    answer=parseInt(num1)+parseInt(num2);
+	}
+	else if(opt=="-"){
+	    answer=num1-num2;
+	}
+	else if(opt=="*"){
+	    answer=num1*num2;
+	}
+	else{
+	    answer=num1/num2;
+	}
+    //设置结果输入框的值 
+    document.getElementById("fruit").value=answer;
+   } 
+  </script> 
+ </head> 
+ <body>
+   <input type='text' id='txt1' /> 
+   <select id='select'>
+		<option value='+'>+</option>
+		<option value="-">-</option>
+		<option value="*">*</option>
+		<option value="/">/</option>
+   </select>
+   <input type='text' id='txt2' /> 
+   <input type='button' value=' = ' onclick="count()"/> <!--通过 = 按钮来调用创建的函数，得到结果--> 
+   <input type='text' id='fruit' />   
+ </body>
+</html>
+
+
+<!-- switch(opt){
+    case "+":
+        sum=parseInt(a)+parseInt(b);
+        break;
+    case "-":
+        sum=a-b;
+        break;
+    case "*":
+        sum=a*b;
+        break;
+    case "/": 
+        sum=a/b;
+        break;
+    default:
+        sum=NULL;
+} -->
