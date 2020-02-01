@@ -777,3 +777,232 @@
   刷新进入网站会显示弹窗，但是关闭页面时不会显示，评论中给的解答是这样的：
 
   <img src="https://img1.mukewang.com/5b2224b800019fa105000451.jpg">
+
+## 内置对象
+
+- JavaScript 中的所有事物都是对象，如:字符串、数值、数组、函数等，每个对象带有**属性**和**方法**。
+
+  **对象的属性：**反映该对象某些特定的性质的，如：字符串的长度、图像的长宽等；
+
+  **对象的方法：**能够在对象上执行的动作。例如，表单的“提交”(Submit)，时间的“获取”(getYear)等；
+
+  JavaScript 提供多个内建对象，比如 String、Date、Array 等等，使用对象前先定义，如下使用数组对象：
+
+  ```javascript
+    var objectName =new Array();//使用new关键字定义对象
+  或者
+    var objectName =[];
+  ```
+
+  **访问对象属性的语法:**
+
+  ```javascript
+  objectName.propertyName
+  ```
+
+  如使用 Array 对象的 length 属性来获得数组的长度：
+
+  ```javascript
+  var myarray=new Array(6);//定义数组对象
+  var myl=myarray.length;//访问数组长度length属性
+  ```
+
+  **以上代码执行后，myl的值将是：6**
+
+  **访问对象的方法：**
+
+  ```javascript
+  objectName.methodName()
+  ```
+
+  如使用string 对象的 toUpperCase() 方法来将文本转换为大写：
+
+  ```javascript
+  var mystr="Hello world!";//创建一个字符串
+  var request=mystr.toUpperCase(); //使用字符串对象方法
+  ```
+
+  以上代码执行后，request的值是**：HELLO WORLD!**
+
+### Date日期对象
+
+- 日期对象可以储存任意一个日期，并且可以精确到毫秒数（1/1000 秒）。
+
+  定义一个时间对象 :
+
+  ```javascript
+  var Udate=new Date(); 
+  ```
+
+  **注意**:使用关键字new，Date()的首字母必须大写。 
+
+  使 Udate 成为日期对象，并且已有初始值：**当前时间(当前电脑系统时间)**。
+
+  如果要自定义初始值，可以用以下方法：
+
+  ```javascript
+  var d = new Date(2012, 10, 1);  //2012年10月1日
+  var d = new Date('Oct 1, 2012'); //2012年10月1日
+  ```
+
+  我们最好使用下面介绍的“方法”来严格定义时间。
+
+  **访问方法语法：**“<日期对象>.<方法>”
+
+  Date对象中处理时间和日期的常用方法：
+
+  <img src="http://img.mukewang.com/555c650d0001ae7b04180297.jpg">
+
+### 返回/设置年份方法
+
+#### get/setFullYear()
+
+- 返回/设置年份，用四位数表示。
+
+  ```javascript
+  var mydate=new Date();//当前时间2020年2月1日
+  document.write(mydate+"<br>");//输出当前时间
+  document.write(mydate.getFullYear()+"<br>");//输出当前年份
+  mydate.setFullYear(81); //设置年份
+  document.write(mydate+"<br>"); //输出年份被设定为 0081年。
+  ```
+
+  **注意:**不同浏览器， mydate.setFullYear(81)结果不同，年份被设定为 0081或81两种情况。
+
+  **结果:**
+
+  ```javascript
+  Thu Mar 06 2014 10:57:47 GMT+0800
+  2014
+  Thu Mar 06 0081 10:57:47 GMT+0800
+  ```
+
+  **注意:**
+
+  1.结果格式依次为：星期、月、日、年、时、分、秒、时区。(火狐浏览器)
+
+  2.不同浏览器，时间格式有差异。
+
+### 返回星期方法
+
+#### getDay()
+
+-  返回星期，返回的是0-6的数字，0 表示星期天。如果要返回相对应“星期”，通过数组完成，代码如下:
+
+  ```javascript
+  <script type="text/javascript">
+    var mydate=new Date();//定义日期对象
+    var weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+  //定义数组对象,给每个数组项赋值
+    var mynum=mydate.getDay();//返回值存储在变量mynum中
+    document.write(mydate.getDay());//输出getDay()获取值
+    document.write("今天是："+ weekday[mynum]);//输出星期几
+  </script>
+  ```
+
+  注意：以上代码是在2014年3月7日，星期五运行。
+
+  **结果:**
+
+  5
+
+  今天是：星期五
+
+### 返回/设置时间方法
+
+#### get/setTime() 
+
+- 返回/设置时间，单位毫秒数，计算从 1970 年 1 月 1 日零时到日期对象所指的日期的毫秒数。
+
+- 如果将目前日期对象的时间推迟1小时，代码如下:
+
+  ```javascript
+  <script type="text/javascript">
+    var mydate=new Date();
+    document.write("当前时间："+mydate+"<br>");
+    mydate.setTime(mydate.getTime() + 60 * 60 * 1000);
+    document.write("推迟一小时时间：" + mydate);
+  </script>
+  ```
+
+  **结果:**
+
+  当前时间：Thu Mar 6 11:46:27 UTC+0800 2014
+
+  推迟一小时时间：Thu Mar 6 12:46:27 UTC+0800 2014
+
+  **注意:**
+
+  1. 一小时 60 分，一分 60 秒，一秒 1000 毫秒
+
+  2. 时间推迟 1 小时,就是: “x.setTime(x.getTime() + 60 * 60 * 1000);”
+
+### String 字符串对象
+
+- 定义字符串的方法就是直接赋值。
+
+  ```javascript
+  var mystr = "I love JavaScript!"
+  ```
+
+  定义mystr字符串后，我们就可以访问它的属性和方法。
+
+  **访问字符串对象的属性length:**
+
+  stringObject.length; 返回该字符串的长度。
+
+  ```javascript
+  var mystr="Hello World!";
+  var myl=mystr.length;
+  ```
+
+  以上代码执行后，myl 的值将是：12
+
+  **访问字符串对象的方法：**
+
+  使用 String 对象的 toUpperCase() 方法来将字符串小写字母转换为大写：
+
+  ```javascript
+  var mystr="Hello world!";
+  var mynum=mystr.toUpperCase();
+  以上代码执行后，mynum 的值是：HELLO WORLD!
+  ```
+
+- 变成小写：toLowerCase()方法
+
+### 返回指定位置的字符
+
+#### charAt()
+
+- charAt() 方法可返回指定位置的字符。返回的字符是长度为 1 的字符串。
+
+  **语法:**
+
+  ```javascript
+  stringObject.charAt(index)
+  ```
+
+  **参数说明：**
+
+  <img src="http://img.mukewang.com/53251a310001cf1e03370092.jpg">
+
+  **注意**：1.字符串中第一个字符的下标是 0。最后一个字符的下标为字符串长度减一（string.length-1）。
+
+  2.如果参数 index 不在 0 与 string.length-1 之间，该方法将返回一个空字符串。
+
+  **如:**在字符串 "I love JavaScript!" 中，返回位置2的字符：
+
+  ```javascript
+  <script type="text/javascript">
+    var mystr="I love JavaScript!"
+    document.write(mystr.charAt(2));
+  </script>
+  ```
+
+  **注意：**一个空格也算一个字符。
+
+  以上代码的运行结果：
+
+  ```javascript
+  l
+  ```
