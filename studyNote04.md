@@ -1,4 +1,4 @@
-# JavaScript进阶篇笔记
+#  JavaScript进阶篇笔记
 
 ## JS基础语法
 
@@ -986,23 +986,636 @@
 
   <img src="http://img.mukewang.com/53251a310001cf1e03370092.jpg">
 
-  **注意**：1.字符串中第一个字符的下标是 0。最后一个字符的下标为字符串长度减一（string.length-1）。
+  **注意**：
+
+  1.字符串中第一个字符的下标是 0。最后一个字符的下标为字符串长度减一（string.length-1）。
 
   2.如果参数 index 不在 0 与 string.length-1 之间，该方法将返回一个空字符串。
 
   **如:**在字符串 "I love JavaScript!" 中，返回位置2的字符：
-
+  
   ```javascript
   <script type="text/javascript">
     var mystr="I love JavaScript!"
     document.write(mystr.charAt(2));
-  </script>
+</script>
   ```
 
   **注意：**一个空格也算一个字符。
 
   以上代码的运行结果：
-
+  
   ```javascript
   l
+  ```
+
+### 返回指定的字符串首次出现的位置
+
+#### indexOf() 
+
+- indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
+
+  **语法**
+
+  ```javascript
+  stringObject.indexOf(substring, startpos)
+  ```
+
+  **参数说明：**
+
+  <img src="http://img1.sycdn.imooc.com/53853d4200019feb04920149.jpg">
+
+  **说明：**
+
+  1.该方法将从头到尾地检索字符串 stringObject，看它是否含有子串 substring。
+
+  2.可选参数，从stringObject的startpos位置开始查找substring，如果没有此参数将从stringObject的开始位置查找。
+
+  3.如果找到一个 substring，则返回 substring 的第一次出现的位置。stringObject 中的字符位置是从 0 开始的。
+
+  **注意：**
+
+  1.indexOf() 方法区分大小写。
+
+  2.如果要检索的字符串值没有出现，则该方法返回 -1。
+
+  例如: 对 "I love JavaScript!" 字符串内进行不同的检索：
+
+  ```javascript
+  <script type="text/javascript">
+    var str="I love JavaScript!"
+    document.write(str.indexOf("I") + "<br />");
+    document.write(str.indexOf("v") + "<br />");
+    document.write(str.indexOf("v",8));
+  </script>
+  ```
+
+  以上代码的输出：
+
+  ```javascript
+  0
+  4
+  9
+  ```
+
+### 字符串分割split()
+
+- split() 方法将字符串分割为字符串数组，并返回此数组。
+
+  **语法：**
+
+  ```javascript
+  stringObject.split(separator,limit)
+  ```
+
+  **参数说明:**
+
+  <img src="http://img1.sycdn.imooc.com/532bee4800014c0404230108.jpg">
+
+  **注意：**如果把空字符串 ("") 用作 separator，那么 stringObject 中的每个字符之间都会被分割。
+
+  **我们将按照不同的方式来分割字符串：**
+
+  使用指定符号分割字符串，代码如下:
+
+  ```javascript
+  var mystr = "www.imooc.com";
+  document.write(mystr.split(".")+"<br>");
+  document.write(mystr.split(".", 2)+"<br>");
+  ```
+
+  **运行结果:**
+
+  ```javascript
+  www,imooc,com
+  www,imooc
+  ```
+
+  将字符串分割为字符，代码如下：
+
+  ```javascript
+  document.write(mystr.split("")+"<br>");
+  document.write(mystr.split("", 5));
+  ```
+
+  运行结果:
+
+  ```javascript
+  w,w,w,.,i,m,o,o,c,.,c,o,m
+  w,w,w,.,i
+  ```
+
+### 提取字符串substring()
+
+- substring() 方法用于提取字符串中介于两个指定下标之间的字符。
+
+  **语法:**
+
+  ```
+  stringObject.substring(startPos,stopPos) 
+  ```
+
+  **参数说明:**
+
+  <img src="http://img1.sycdn.imooc.com/532bf1bb000151af04450082.jpg">
+
+  **注意：**
+
+  1. 返回的内容是从 start开始(包含start位置的字符)到 stop-1 处的所有字符，其长度为 stop 减start。
+
+  2. 如果参数 start 与 stop 相等，那么该方法返回的就是一个空串（即长度为 0 的字符串）。
+
+  3. 如果 start 比 stop 大，那么该方法在提取子串之前会先交换这两个参数。
+
+  使用 substring() 从字符串中提取字符串，代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+    var mystr="I love JavaScript";
+    document.write(mystr.substring(7));
+    document.write(mystr.substring(2,6));
+  </script>
+  ```
+
+  **运行结果**:
+
+  ```javascript
+  JavaScript
+  love
+  ```
+
+### 提取指定数目的字符substr()
+
+- substr() 方法从字符串中提取从 startPos位置开始的指定数目的字符串。
+
+  **语法:**
+
+  ```javascript
+  stringObject.substr(startPos,length)
+  ```
+
+  **参数说明:**
+
+  <img src="http://img1.sycdn.imooc.com/532bf2e00001105305100098.jpg">
+
+  **注意：**如果参数startPos是负数，从字符串的尾部开始算起的位置。也就是说，-1 指字符串中最后一个字符，-2 指倒数第二个字符，以此类推。
+
+  如果startPos为负数且绝对值大于字符串长度，startPos为0。
+
+  使用 substr() 从字符串中提取一些字符，代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+    var mystr="I love JavaScript!";
+    document.write(mystr.substr(7));
+    document.write(mystr.substr(2,4));
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  JavaScript!
+  love
+  ```
+
+### Math对象
+
+- Math对象，提供对数据的数学计算。
+
+  使用 Math 的属性和方法，代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+    var mypi=Math.PI; 
+    var myabs=Math.abs(-15);
+    document.write(mypi);
+    document.write(myabs);
+  </script>
+  ```
+
+  **运行结果**:
+
+  ```javascript
+  3.141592653589793
+  15
+  ```
+
+  **注意：**
+
+  Math 对象是一个固有的对象，无需创建它，直接把 Math 作为对象使用就可以调用其所有属性和方法。这是它与Date,String对象的区别。
+
+  Math 对象属性
+
+  <img src="http://img1.sycdn.imooc.com/532fe7cf0001e7b505170269.jpg">
+
+  Math 对象方法
+
+  <img src="http://img1.sycdn.imooc.com/532fe841000174db05160622.jpg">
+
+### 向上取整ceil()
+
+- ceil() 方法可对一个数进行向上取整。
+
+  **语法:**
+
+  ```
+  Math.ceil(x)
+  ```
+
+  **参数说明:**
+
+  <img src="http://img1.sycdn.imooc.com/532fe8e00001e4e605230063.jpg">
+
+  **注意：**
+
+  它返回的是大于或等于x，并且与x最接近的整数。
+
+  我们将把 ceil() 方法运用到不同的数字上，代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+    document.write(Math.ceil(0.8) + "<br />")
+    document.write(Math.ceil(6.3) + "<br />")
+    document.write(Math.ceil(5) + "<br />")
+    document.write(Math.ceil(3.5) + "<br />")
+    document.write(Math.ceil(-5.1) + "<br />")
+    document.write(Math.ceil(-5.9))
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  1
+  7
+  5
+  4
+  -5
+  -5
+  ```
+
+### 向下取整floor()
+
+- floor() 方法可对一个数进行向下取整。
+
+  **语法:**
+
+  ```
+  Math.floor(x)
+  ```
+
+  **参数说明：**
+
+  <img src="http://img1.sycdn.imooc.com/532fe8e00001e4e605230063.jpg">
+
+  **注意：**返回的是小于或等于x，并且与 x 最接近的整数。
+
+  我们将在不同的数字上使用 floor() 方法，代码如下:
+
+  ```javascript
+  <script type="text/javascript">
+    document.write(Math.floor(0.8)+ "<br>")
+    document.write(Math.floor(6.3)+ "<br>")
+    document.write(Math.floor(5)+ "<br>")
+    document.write(Math.floor(3.5)+ "<br>")
+    document.write(Math.floor(-5.1)+ "<br>")
+    document.write(Math.floor(-5.9))
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  0
+  6
+  5
+  3
+  -6
+  -6
+  ```
+
+### 四舍五入round()
+
+- round() 方法可把一个数字四舍五入为最接近的整数。
+
+  **语法:**
+
+  ```
+  Math.round(x)
+  ```
+
+  **参数说明：**
+
+  <img src="http://img1.sycdn.imooc.com/532feb70000180ab03210059.jpg">
+
+  **注意：**
+
+  1. 返回与 x 最接近的整数。
+
+  2. 对于 0.5，该方法将进行上舍入。(5.5 将舍入为 6)
+
+  3. 如果 x 与两侧整数同等接近，则结果接近 +∞方向的数字值 。(如 -5.5 将舍入为 -5; -5.52 将舍入为 -6),如下图:
+
+  <img src="http://img1.sycdn.imooc.com/53fc4cc8000169a907530196.jpg">
+
+  把不同的数舍入为最接近的整数,代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+    document.write(Math.round(1.6)+ "<br>");
+    document.write(Math.round(2.5)+ "<br>");
+    document.write(Math.round(0.49)+ "<br>");
+    document.write(Math.round(-6.4)+ "<br>");
+    document.write(Math.round(-6.6));
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  2
+  3
+  0
+  -6
+  -7
+  ```
+
+### 随机数 random()
+
+- ```javascript
+  random() 方法可返回介于 0 ~ 1（大于或等于 0 但小于 1 )之间的一个随机数。
+  ```
+
+  **语法：**
+
+  ```javascript
+  Math.random();
+  ```
+
+  **注意：**返回一个大于或等于 0 但小于 1 的符号为正的数字值。
+
+  我们取得介于 0 到 1 之间的一个随机数，代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+    document.write(Math.random());
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  0.190305486195328  
+  ```
+
+  **注意**:
+
+  因为是随机数，所以每次运行结果不一样，但是0 ~ 1的数值。
+
+  获得0 ~ 10之间的随机数，代码如下:
+
+  ```javascript
+  <script type="text/javascript">
+    document.write((Math.random())*10);
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  8.72153625893887
+  ```
+
+### Array 数组对象
+
+- 数组对象是一个对象的集合，里边的对象可以是不同类型的。数组的每一个成员对象都有一个“下标”，用来表示它在数组中的位置，是从零开始的
+
+  **数组定义的方法：**
+
+  1.定义了一个空数组:
+
+  ```javascript
+  var  数组名= new Array();
+  ```
+
+  2.定义时指定有n个空元素的数组：
+
+  ```javascript
+  var 数组名 =new Array(n);
+  ```
+
+  3.定义数组的时候，直接初始化数据：
+
+  ```javascript
+  var  数组名 = [<元素1>, <元素2>, <元素3>...];
+  ```
+
+  我们定义myArray数组，并赋值，**代码如下：**
+
+  ```javascript
+  var myArray = [2, 8, 6]; 
+  ```
+
+  **说明：**定义了一个数组 myArray，里边的元素是：myArray[0] = 2; myArray[1] = 8; myArray[2] = 6。
+
+  **数组元素使用：**
+
+  ```javascript
+  数组名[下标] = 值;
+  ```
+
+  **注意**: 数组的下标用方括号括起来，从0开始。
+
+  **数组属性：**
+
+  length 用法：<数组对象>.length；返回：数组的长度，即数组里有多少个元素。它等于数组里最后一个元素的下标加一。
+
+  **数组方法：**
+
+  <img src="http://img.mukewang.com/533295ab0001dead05190599.jpg">
+
+#### 数组连接concat()
+
+- concat() 方法用于连接两个或多个数组。此方法返回一个新数组，不改变原来的数组。
+
+  **语法**
+
+  ```
+  arrayObject.concat(array1,array2,...,arrayN)
+  ```
+
+  **参数说明：**
+
+  <img src="http://img.mukewang.com/5332968d0001d39b05010137.jpg">
+
+  **注意:** 
+
+  该方法不会改变现有的数组，而仅仅会返回被连接数组的一个副本。
+
+  我们创建一个数组，将把 concat() 中的参数连接到数组 myarr 中，代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+    var mya = new Array(3);
+    mya[0] = "1";
+    mya[1] = "2";
+    mya[2] = "3";
+    document.write(mya.concat(4,5)+"<br>");
+    document.write(mya); 
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  1,2,3,4,5
+  1,2,3
+  ```
+
+  我们创建了三个数组，然后使用 concat() 把它们连接起来，代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+    var mya1= new Array("hello!")
+    var mya2= new Array("I","love");
+    var mya3= new Array("JavaScript","!");
+    var mya4=mya1.concat(mya2,mya3);
+    document.write(mya4);
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  hello!,I,love,JavaScript,!
+  ```
+
+#### 指定分隔符连接数组元素join()
+
+- join()方法用于把数组中的所有元素放入一个字符串。元素是通过指定的分隔符进行分隔的。
+
+  **语法：**
+
+  ```
+  arrayObject.join(分隔符)
+  ```
+
+  **参数说明:**
+
+  <img src="http://img.mukewang.com/533297ff0001516905150059.jpg">
+
+  注意：
+
+  返回一个字符串，该字符串把数组中的各个元素串起来，用<分隔符>置于元素与元素之间。这个方法不影响数组原本的内容。 我们使用join（）方法，将数组的所有元素放入一个字符串中，代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+    var myarr = new Array(3);
+    myarr[0] = "I";
+    myarr[1] = "love";
+    myarr[2] = "JavaScript";
+    document.write(myarr.join());
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  I,love,JavaScript
+  ```
+
+  我们将使用分隔符来分隔数组中的元素，代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+    var myarr = new Array(3)
+    myarr[0] = "I";
+    myarr[1] = "love";
+    myarr[2] = "JavaScript";
+    document.write(myarr.join("."));
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  I.love.JavaScript
+  ```
+
+#### 颠倒数组元素顺序reverse()
+
+- reverse() 方法用于颠倒数组中元素的顺序。
+
+  **语法：**
+
+  ```javascript
+  arrayObject.reverse()
+  ```
+
+  **注意：**该方法会改变原来的数组，而不会创建新的数组。
+
+  定义数组myarr并赋值，然后颠倒其元素的顺序：
+
+  ```javascript
+  <script type="text/javascript">
+    var myarr = new Array(3)
+    myarr[0] = "1"
+    myarr[1] = "2"
+    myarr[2] = "3"
+    document.write(myarr + "<br />")
+    document.write(myarr.reverse())
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  1,2,3
+  3,2,1
+  ```
+
+#### 选定元素slice()
+
+- slice() 方法可从已有的数组中返回选定的元素。
+
+  **语法**
+
+  ```javascript
+  arrayObject.slice(start,end)
+  ```
+
+  **参数说明：**
+
+  <img src="http://img.mukewang.com/533299680001637b05160145.jpg">
+
+  1.返回一个新的数组，包含从 start 到 end （不包括该元素）的 arrayObject 中的元素。
+
+  2.该方法并不会修改数组，而是返回一个子数组。
+
+  **注意：**
+
+  1. 可使用负值从数组的尾部选取元素。
+
+     2.如果 end 未被规定，那么 slice() 方法会选取从 start 到数组结尾的所有元素。
+
+  3. String.slice() 与 Array.slice() 相似。
+
+  我们将创建一个新数组，然后从其中选取的元素，代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+    var myarr = new Array(1,2,3,4,5,6);
+    document.write(myarr + "<br>");
+    document.write(myarr.slice(2,4) + "<br>");
+    document.write(myarr);
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  1,2,3,4,5,6
+  3,4
+  1,2,3,4,5,6
   ```
