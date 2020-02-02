@@ -1,0 +1,78 @@
+<!DOCTYPE  HTML>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>系好安全带,准备启航</title>
+
+<script type="text/javascript">
+
+  //通过javascript的日期对象来得到当前的日期，并输出。
+  var theDate = new Date();
+  var weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+  var weeknum = theDate.getDay();
+  document.write(theDate.getFullYear()+"年"+theDate.getMonth()+"月"+theDate.getDay()+"日"+" "+weekday[theDate.getDay()]+"--班级总分为：81");
+ 
+  
+  //成绩是一长窜的字符串不好处理，找规律后分割放到数组里更好操作哦
+  var scoreStr = "小明:87;小花:81;小红:97;小天:76;小张:74;小小:94;小西:90;小伍:76;小迪:64;小曼:76";
+  var scoreArr = new Array();
+  document.write(scoreStr.split(";")+"<br/>");
+  scoreArr = scoreStr.split(";"); //这里为啥不需要()因为这里数组只有一个
+  for(var i=0;i<10;i++){
+      document.write(scoreArr[i]+"<br/>");
+  }
+    document.write("<br/>");
+    var sum=0;
+    
+  for(var j=0;j<10;j++){
+    document.write(scoreArr[j].split(":")+"<br/>");
+//一开始打算直接用split再用slice但是这样没有成功
+//    var score = new Array();
+//    score[n] = scoreArr[j].split(":").slice(3,5);
+//改正方法：先把分割后的成绩存储在数组中，再进行slice获取元素
+//这个改正方法又出现了问题，首先我想要的获取元素是获取数组中单个元素中的部分字符，而slice是将整个数组中按照你所填的要求来进行分割，所以这样用是错的
+//还是需要用split用于切割字符串
+    var arr1 = new Array();
+   // arr1 = scoreArr[j].split(":");
+   // var arr2 = new Array();
+   // arr2 = arr1.slice(3,5);
+   //这里一开始出来的分数是undefined,因为这里有个错误，arr1没有数组下边= =好蠢啊！这么低级的错误
+   //哈哈哈哈哈哈是用substring 不是split也不是slice
+   //将分割后的数组scoreArr用substring获取元素得到分数，再把分数转化成整型
+   arr1[j] = scoreArr[j].substring(3,5);
+   document.write(arr1[j]+"<br />");
+   //document.write("<br/>");
+   var score = new Array();
+   score[j]=parseInt(arr1[j]);
+   document.write("分数："+score[j]+"<br/>");
+   
+   
+    //arr2 = arr1[j].split(":",2);
+    //document.write("分数："+arr2[j]);
+    
+    sum=sum+score[j];
+    document.write("总分数："+sum+"<br/>");
+    document.write("<br/>");
+    //这里一开始出来的分数是undefined
+    
+  //  document.write(arr1+"<br/>");
+    
+    
+  //  var score = new Array();
+   // score[n] = scoreArr[j].split(":").slice(3,5);
+   // document.write(score[n]);
+//个人记录：我的想法是先分割出每个人的姓名和分数存在数组1中
+//再对数组1中的数据根据：来进行分割
+//通过单数的数组下标来获取每个人的分数（但是不知道怎么操作）
+}
+ var avg=sum/(scoreArr.length);
+ document.write("平均分："+avg+"<br/>");
+  //从数组中将成绩撮出来，然后求和取整，并输出。
+  document.write(theDate.getFullYear()+"年"+(theDate.getMonth()+1)+"月"+theDate.getDate()+"日"+" "+weekday[theDate.getDay()]+"--班级总分为："+sum+" 平均分："+avg);
+
+
+</script>
+</head>
+<body>
+</body>
+</html>
