@@ -1619,3 +1619,78 @@
   3,4
   1,2,3,4,5,6
   ```
+
+#### 数组排序sort()
+
+- **sort()**方法使数组中的元素按照一定的顺序排列。
+
+  **语法:**
+
+  ```
+  arrayObject.sort(方法函数)
+  ```
+
+  **参数说明：**
+
+  <img src="http://img.mukewang.com/53329a2a000127f705170060.jpg">
+
+  1.如果不指定<方法函数>，则按unicode码顺序排列。
+
+  2.如果指定<方法函数>，则按<方法函数>所指定的排序方法排序。
+
+  ```javascript
+  myArray.sort(sortMethod);
+  ```
+
+  **注意:** 该函数要比较两个值，然后返回一个用于说明这两个值的相对顺序的数字。比较函数应该具有两个参数 a 和 b，其返回值如下： 
+
+   若返回值<=-1，则表示 A 在排序后的序列中出现在 B 之前。
+   若返回值>-1 && <1，则表示 A 和 B 具有相同的排序顺序。
+   若返回值>=1，则表示 A 在排序后的序列中出现在 B 之后。
+
+  1.使用sort()将数组进行排序，代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+    var myarr1 = new Array("Hello","John","love","JavaScript"); 
+    var myarr2 = new Array("80","16","50","6","100","1");
+    document.write(myarr1.sort()+"<br>");
+    document.write(myarr2.sort());
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  Hello,JavaScript,John,love
+  1,100,16,50,6,80
+  ```
+
+  **注意:上面的代码没有按照数值的大小对数字进行排序。**
+
+  **2.如要实现这一点，就必须使用一个排序函数，代码如下：**
+
+  ```javascript
+  <script type="text/javascript">
+    function sortNum(a,b) {
+    return a - b;
+   //升序，如降序，把“a - b”该成“b - a”
+  }
+   var myarr = new Array("80","16","50","6","100","1");
+    document.write(myarr + "<br>");
+    document.write(myarr.sort(sortNum));
+  </script>
+  ```
+
+  **运行结果：**
+
+  ```javascript
+  80,16,50,6,100,1
+  1,6,16,50,80,100
+  ```
+
+- 个人笔记:
+
+  这里有个不是很明白的点:既然是传值，数组中有那么多个值，是这个sort函数内置了进行逐个比较吗？否则如何根据两个数得到返回值进行比较，是因为内置函数的原因吗？不需要我们考虑原理，只要使用就可以。
+
+## 浏览器对象
