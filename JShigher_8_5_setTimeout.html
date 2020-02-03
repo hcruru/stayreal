@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>计时器</title>
+
+</head>
+<body>
+<form>
+<input type="text" id="count" />
+</form>
+<script type="text/javascript">
+    var num=0;
+    function startCount() {
+      document.getElementById('count').value=num;
+      num=num+1;
+      setTimeout("startCount()",1000);
+    }
+    startCount();
+  </script>
+</body>
+</html>
+<!-- 这里自己做的时候有点问题：
+1.忘记函数外调用函数，所以input框不显示计时
+2.是<script></script>标签一开始放在<from>之间，<input>之前，
+    由于编译器是由上至下解析,所以JS代码无法获取到input的id，
+    所以不能正常运行，应该放在</from>标签之后,</body>之前 -->
