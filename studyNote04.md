@@ -2199,3 +2199,69 @@
 ### DOM
 
 - 文档对象模型DOM（Document Object Model）定义访问和处理HTML文档的标准方法。DOM 将HTML文档呈现为带有元素、属性和文本的树结构（节点树）。
+
+- HTML文档可以说由节点构成的集合，三种常见的DOM节点：
+
+  - 1.元素节点：上图中\<html>、\<body>、\<p>等都是元素节点，即标签。
+  - 2.文本节点：向用户展示的内容，如\<li>...\</li>中的JavaScript、DOM、CSS等文本。
+  - 3.属性节点：元素属性，如\<a>标签的链接属性href="http://www.imooc.com"。
+
+  **节点属性：**
+
+  <img src="http://img.mukewang.com/5375c953000117ee05240129.jpg">
+
+  **遍历节点树:**
+
+  <img src="http://img.mukewang.com/53f17a6400017d2905230219.jpg">
+
+  **DOM操作:**
+
+  <img src="http://img.mukewang.com/538d29da000152db05360278.jpg">
+
+  **注意:**前两个是document方法。
+
+### getElementsByName()方法
+
+- 返回带有指定名称的节点对象的集合。
+
+  **语法：**
+
+  ```javascript
+  document.getElementsByName(name)
+  ```
+
+  与getElementById() 方法不同的是，通过元素的 name 属性查询元素，而不是通过 id 属性。
+
+  **注意:**
+
+  1. 因为文档中的 name 属性可能不唯一，所有 getElementsByName() 方法返回的是元素的数组，而不是一个元素。
+
+  2. 和数组类似也有length属性，可以和访问数组一样的方法来访问，从0开始。
+
+- eg:
+
+  <img src="http://img.mukewang.com/5375d5ec00012bac06210322.jpg">
+
+  运行结果：
+
+  <img src="http://img.mukewang.com/53795f0b0001233404580318.jpg">
+
+### getElementsByTagName()方法
+
+- 返回带有指定标签名的节点对象的集合。返回元素的顺序是它们在文档中的顺序。
+
+- **语法:**
+
+  ```
+  document.getElementsByTagName(Tagname)
+  ```
+
+  **说明:**
+
+  1. Tagname是标签的名称，如p、a、img等标签名。
+
+  2. 和数组类似也有length属性，可以和访问数组一样的方法来访问，所以从0开始。
+
+  看看下面代码，通过getElementsByTagName()获取节点。
+
+  <img src="http://img.mukewang.com/53ec174a0001404206540436.jpg">
