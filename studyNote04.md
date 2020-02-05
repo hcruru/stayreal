@@ -2265,3 +2265,114 @@
   看看下面代码，通过getElementsByTagName()获取节点。
 
   <img src="http://img.mukewang.com/53ec174a0001404206540436.jpg">
+
+#### 三种获取节点方法的区别
+
+- **getElementByID,**
+
+- **getElementsByName,**
+
+- **getElementsByTagName**
+
+  **以人来举例说明，人有能标识身份的身份证，有姓名，有类别(大人、小孩、老人)等。**
+
+  1. ID 是一个人的身份证号码，是唯一的。所以通过getElementById获取的是指定的一个人。
+
+  2. Name 是他的名字，可以重复。所以通过getElementsByName获取名字相同的人**集合**。
+
+  3. TagName可看似某类，getElementsByTagName获取相同类的人集合。如获取小孩这类人，getElementsByTagName("小孩")。
+
+  **把上面的例子转换到HTML中，如下:**
+
+  ```HTML
+  <input type="checkbox" name="hobby" id="hobby1">  音乐
+  ```
+
+  input标签就像人的类别。
+
+  name属性就像人的姓名。
+
+  id属性就像人的身份证。
+
+  **方法总结如下:**
+
+  <img src="http://img.mukewang.com/5405263300018bcf05760129.jpg">
+
+  **注意：**方法区分大小写
+
+  通过下面的例子(6个name="hobby"的复选项，两个按钮)来区分三种方法的不同:
+
+  ```html
+    <input type="checkbox" name="hobby" id="hobby1">  音乐
+    <input type="checkbox" name="hobby" id="hobby2">  登山
+    <input type="checkbox" name="hobby" id="hobby3">  游泳
+    <input type="checkbox" name="hobby" id="hobby4">  阅读
+    <input type="checkbox" name="hobby" id="hobby5">  打球
+    <input type="checkbox" name="hobby" id="hobby6">  跑步 
+    <input type="button" value = "全选" id="button1">
+    <input type="button" value = "全不选" id="button1">
+  ```
+
+  1. document.getElementsByTagName("input")，结果为获取所有标签为input的元素，共8个。
+
+  2. document.getElementsByName("hobby")，结果为获取属性name="hobby"的元素，共6个。
+
+  3. document.getElementById("hobby6")，结果为获取属性id="hobby6"的元素，只有一个，"跑步"这个复选项。
+
+##### 小节任务：
+
+1.在第27行处补充完整，实现当点击"全选"按钮时，将选中所有的复选项。
+
+```html
+提示:document.getElementsByTagName("input")获取的是所有input标签，包括复选项和按钮，所以要判断是否是复选项，如是选中。
+```
+
+2.在第33行处补充完整，实现当点击"全不选"按钮时，将取消所有选中的复选项。
+
+3.在第40行处补充完整，在文本框中输入输入1-6数值，当点击"确定"按钮时，根据输入的数值，通过id选中相应的复选项。
+
+- 碰到的问题：
+
+  - 1.不知道获取了标签名后如何设置checked值从而达到全选（还忘记了在全选前设置判断复选框和按钮，是复选框才全选）
+
+  - 2.取消设置的checked值false不能加引号（好奇怪啊ture都可以）
+
+    - 解决办法：
+
+    - 1.getElementsByTagName方法得到的结果是一个数组集合，所以做判断时不能单纯的用if判断，要用for循环，再进行判断：
+
+      for(i = 0;i < hobby.length;i++){
+                if(hobby[i].type == "checkbox"){
+                 hobby[i].checked = true;  }
+               }
+
+      并且要逐个获取input标签的type值来判断是否为复选框再设置checked的值。//（或checked="checked"）——这个括号里的搞错了，设置checked="checked"是设置网页载入后的默认选项，而不是说点这个就默认
+
+    - 注意:true|false是属性语法规定不用加引号的
+    
+  - 3.任务3不能用switch语句，因为用switch语句要赋初值，但是这个是根据input框用户输入的内容再进行判断给复选框勾选的，所以不行。
+
+### getAttribute()方法
+
+- 通过元素节点的属性名称获取属性的值。
+
+  **语法：**
+
+  ```
+  elementNode.getAttribute(name)
+  ```
+
+  **说明:**
+
+  1. elementNode：使用getElementById()、getElementsByTagName()等方法，获取到的元素节点。
+
+  2. name：要想查询的元素节点的属性名字
+
+  看看下面的代码，获取h1标签的属性值：
+
+  ![](http://img.mukewang.com/538d242700019ec809330432.jpg)
+
+  **运行结果:**
+
+  h1标签的ID ：alink
+  h1标签的title ：getAttribute()获取标签的属值
