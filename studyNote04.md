@@ -2360,7 +2360,7 @@
 
   **语法：**
 
-  ```
+  ```javascript
   elementNode.getAttribute(name)
   ```
 
@@ -2378,3 +2378,200 @@
 
   h1标签的ID ：alink
   h1标签的title ：getAttribute()获取标签的属值
+
+### setAttribute()方法
+
+- setAttribute() 方法增加一个指定名称和值的新属性，或者把一个现有的属性设定为指定的值。
+
+  **语法：**
+
+  ```javascript
+  elementNode.setAttribute(name,value)
+  ```
+
+  **说明：**
+
+  1.name: 要设置的属性名。
+
+  2.value: 要设置的属性值。
+
+  **注意：**
+
+  1.把指定的属性设置为指定的值。如果不存在具有指定名称的属性，该方法将创建一个新属性。
+
+  2.类似于getAttribute()方法，setAttribute()方法只能通过元素节点对象调用的函数。
+
+### 节点属性
+
+- 在文档对象模型 (DOM) 中，每个节点都是一个对象。DOM 节点有三个重要的属性 ：
+
+  1. nodeName : 节点的名称
+
+  2. nodeValue ：节点的值
+
+  3. nodeType ：节点的类型
+
+  **一、nodeName 属性:** 节点的名称，是只读的。
+
+  1. 元素节点的 nodeName 与标签名相同
+
+  2. 属性节点的 nodeName 是属性的名称
+
+  3. 文本节点的 nodeName 永远是 #text
+
+  4. 文档节点的 nodeName 永远是 #document
+
+  **二、nodeValue 属性：**节点的值
+
+  1. 元素节点的 nodeValue 是 undefined 或 null
+
+  2. 文本节点的 nodeValue 是文本自身
+
+  3. 属性节点的 nodeValue 是属性的值
+
+  **三、nodeType 属性:** 节点的类型，是只读的。以下常用的几种结点类型:
+
+  **元素类型   节点类型**
+   元素      1
+   属性      2
+   文本      3
+   注释      8
+   文档      9
+
+### 访问子节点childNodes
+
+- 访问选定元素节点下的所有子节点的列表，返回的值可以看作是一个数组，他具有length属性。
+
+  **语法：**
+
+  ```javascript
+  elementNode.childNodes
+  ```
+
+  **注意：**
+
+  如果选定的节点没有子节点，则该属性返回不包含节点的 NodeList。
+
+  **我们来看看下面的代码:**
+
+  ![](http://img.mukewang.com/538405fa00010e6c05630357.jpg)
+
+  **运行结果:**
+
+  **IE:**
+
+  ```javascript
+    UL子节点个数:3
+    节点类型:1
+  ```
+
+  **其它浏览器:**
+
+  ```javascript
+     UL子节点个数:7
+     节点类型:3
+  ```
+
+  **注意:**
+
+  1. IE全系列、firefox、chrome、opera、safari兼容问题
+
+  2. 节点之间的空白符，在firefox、chrome、opera、safari浏览器是文本节点，所以IE是3，其它浏览器是7，如下图所示:
+
+  ![](http://img.mukewang.com/538d2b8a000163e303430127.jpg)
+
+  **如果把代码改成这样:**
+
+  <ul><li>javascript</li><li>jQuery</li><li>PHP</li></ul>
+
+  **运行结果:（IE和其它浏览器结果是一样的）**
+
+  ```javascript
+    UL子节点个数:3
+    节点类型:1
+  ```
+
+### 访问子节点的第一和最后项
+
+- 一、**`firstChild `**属性返回‘childNodes’数组的第一个子节点。如果选定的节点没有子节点，则该属性返回 NULL。
+
+  **语法：**
+
+  ```javascript
+  node.firstChild
+  ```
+
+  **说明：**与elementNode.childNodes[0]是同样的效果。 
+
+  二、**` lastChild`** 属性返回‘childNodes’数组的最后一个子节点。如果选定的节点没有子节点，则该属性返回 NULL。
+
+  **语法：**
+
+  ```
+  node.lastChild
+  ```
+
+  **说明：**与elementNode.childNodes[elementNode.childNodes.length-1]是同样的效果。 
+
+  **注意:** 上一节中，我们知道Internet Explorer 会忽略节点之间生成的空白文本节点，而其它浏览器不会。我们可以通过检测节点类型，过滤子节点。
+
+### 访问父节点parentNode
+
+- 获取指定节点的父节点
+
+  **语法：**
+
+  ```html
+  elementNode.parentNode
+  ```
+
+  **注意:父节点只能有一个。**
+
+  看看下面的例子,获取 P 节点的父节点，代码如下:
+
+  ```javascript
+  <div id="text">
+    <p id="con"> parentNode 获取指点节点的父节点</p>
+  </div> 
+  <script type="text/javascript">
+    var mynode= document.getElementById("con");
+    document.write(mynode.parentNode.nodeName);
+  </script>
+  ```
+
+  运行结果:
+
+  ```
+  parentNode 获取指点节点的父节点
+  DIV
+  ```
+
+  **访问祖节点:**
+
+  ```
+  elementNode.parentNode.parentNode
+  ```
+
+  看看下面的代码:
+
+  ```html
+  <div id="text">  
+    <p>
+      parentNode      
+      <span id="con"> 获取指点节点的父节点</span>
+    </p>
+  </div> 
+  <script type="text/javascript">
+    var mynode= document.getElementById("con");
+    document.write(mynode.parentNode.parentNode.nodeName);
+  </script>
+  ```
+
+  运行结果:
+
+  ```
+  parentNode获取指点节点的父节点
+  DIV
+  ```
+
+  注意: 浏览器兼容问题，chrome、firefox等浏览器标签之间的空白也算是一个文本节点。
