@@ -2483,13 +2483,12 @@
   **如果把代码改成这样:**
 
   <ul><li>javascript</li><li>jQuery</li><li>PHP</li></ul>
-
-  **运行结果:（IE和其它浏览器结果是一样的）**
-
-  ```javascript
+**运行结果:（IE和其它浏览器结果是一样的）**
+  
+```javascript
     UL子节点个数:3
     节点类型:1
-  ```
+```
 
 ### 访问子节点的第一和最后项
 
@@ -2575,3 +2574,152 @@
   ```
 
   注意: 浏览器兼容问题，chrome、firefox等浏览器标签之间的空白也算是一个文本节点。
+
+### 访问兄弟节点
+
+- 1. nextSibling 属性可返回某个节点**之后**紧跟的节点（处于同一树层级中）。
+
+  **语法：**
+
+  ```javascript
+  nodeObject.nextSibling
+  ```
+
+  **说明：**如果无此节点，则该属性返回 null。
+
+  2. previousSibling 属性可返回某个节点**之前**紧跟的节点（处于同一树层级中）。
+
+  **语法：**
+
+  ```javascript
+  nodeObject.previousSibling  
+  ```
+
+  **说明：**如果无此节点，则该属性返回 null。
+
+  注意: 两个属性获取的是节点。Internet Explorer 会忽略节点间生成的空白文本节点（例如，换行符号），而其它浏览器不会忽略。
+
+  **解决问题方法:**
+
+  **判断节点nodeType是否为1, 如是为元素节点，跳过。**
+
+  ![](http://img.mukewang.com/5386e3c80001c25607010856.jpg)
+
+  **运行结果:**
+
+  ```javascript
+  LI = javascript
+  nextsibling: LI = jquery
+  ```
+
+### 插入节点appendChild()
+
+- 在指定节点的最后一个子节点列表之后添加一个新的子节点。
+
+  **语法:**
+
+  ```javascript
+  appendChild(newnode)
+  ```
+
+  **参数:**
+
+  newnode：指定追加的节点。
+
+  我们来看看，div标签内创建一个新的 P 标签，代码如下:
+
+  ![](http://img.mukewang.com/5398fd020001ad4905890193.jpg)
+
+  **运行结果:**
+
+  ```javascript
+  HTML
+  JavaScript
+  This is a new p
+  ```
+
+### 插入节点insertBefore()
+
+- insertBefore() 方法可在已有的**子节点前**插入一个新的子节点。
+
+  **语法:**
+
+  insertBefore(newnode,node);
+
+  **参数:**
+
+  newnode: 要插入的新节点。
+
+  node: 指定此节点前插入节点。
+
+  我们在来看看下面代码，在指定节点前插入节点。
+
+  ![](http://img.mukewang.com/5395318100010c6806960431.jpg)
+
+  **运行结果:**
+
+  ```html
+  This is a new p
+  JavaScript
+  HTML
+  ```
+
+  **注意:** otest.insertBefore(newnode,node); 也可以改为: otest.insertBefore(newnode,otest.childNodes[0]); 
+
+### 删除节点removeChild()
+
+- removeChild() 方法从子节点列表中删除某个节点。如删除成功，此方法可返回被删除的节点，如失败，则返回 NULL。
+
+  **语法:**
+
+  ```
+  nodeObject.removeChild(node)
+  ```
+
+  **参数:**
+
+  node ：必需，指定需要删除的节点。
+
+  我们来看看下面代码，删除子点。
+
+  ![](http://img.mukewang.com/5399744d000153a306060342.jpg)
+  
+  **运行结果:**
+  
+  ```
+  HTML
+  删除节点的内容: javascript
+  ```
+  
+  **注意:** 把删除的子节点赋值给 x，这个子节点不在DOM树中，但是还存在内存中，可通过 x 操作。
+  
+  如果要完全删除对象，给 x 赋 null 值，代码如下:
+  
+  ![](http://img.mukewang.com/539975a800017c8e04790082.jpg)
+
+### 替换元素节点replaceChild()
+
+- replaceChild 实现子节点(对象)的替换。返回被替换对象的引用。 
+
+  **语法：**
+
+  ```
+  node.replaceChild (newnode,oldnew ) 
+  ```
+
+  **参数：**
+
+  newnode : 必需，用于替换 oldnew 的对象。 
+  oldnew : 必需，被 newnode 替换的对象。
+
+  我们来看看下面的代码:
+
+  ![](http://img.mukewang.com/539557d70001c3ee07190429.jpg)
+
+  效果: 将文档中的 Java 改为 JavaScript。
+
+  **注意:** 
+
+  1. 当 oldnode 被替换时，所有与之相关的属性内容都将被移除。 
+
+  2. newnode 必须先被建立。 
