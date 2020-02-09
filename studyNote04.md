@@ -2723,3 +2723,231 @@
   1. 当 oldnode 被替换时，所有与之相关的属性内容都将被移除。 
 
   2. newnode 必须先被建立。 
+
+- 个人笔记：
+
+  要想替换旧对象，首先要建立新的对象，再将旧的替换。
+
+### 创建元素节点createElement
+
+- createElement()方法可创建元素节点。此方法可返回一个 Element 对象。
+
+  **语法：**
+
+  ```javascript
+  document.createElement(tagName)
+  ```
+
+  **参数:**
+
+  tagName：字符串值，这个字符串用来指明创建元素的类型。
+
+  **注意：**要与appendChild() 或 insertBefore()方法联合使用，将元素显示在页面中。
+
+  我们来创建一个按钮，代码如下：
+
+  ```javascript
+  <script type="text/javascript">
+     var body = document.body; 
+     var input = document.createElement("input");  
+     input.type = "button";  
+     input.value = "创建一个按钮";  
+     body.appendChild(input);  
+   </script>  
+  ```
+
+  效果：在HTML文档中，创建一个按钮。
+
+  我们也可以使用setAttribute来设置属性，代码如下：
+
+  ```javascript
+  <script type="text/javascript">  
+     var body= document.body;             
+     var btn = document.createElement("input");  
+     btn.setAttribute("type", "text");  
+     btn.setAttribute("name", "q");  
+     btn.setAttribute("value", "使用setAttribute");  
+     btn.setAttribute("onclick", "javascript:alert('This is a text!');");       
+     body.appendChild(btn);  
+  </script>  
+  ```
+
+  效果：在HTML文档中，创建一个文本框，使用setAttribute设置属性值。 当点击这个文本框时，会弹出对话框“This is a text!”。
+
+### 创建文本节点createTextNode
+
+- createTextNode() 方法创建新的文本节点，返回新创建的 Text 节点。
+
+  **语法：**
+
+  ```
+  document.createTextNode(data)
+  ```
+
+  **参数：**
+
+  data : 字符串值，可规定此节点的文本。
+
+  我们来创建一个<div>元素并向其中添加一条消息，代码如下：
+
+  ![](http://img.mukewang.com/53951c200001d32d07130554.jpg)
+
+  **运行结果:**
+
+  ![](http://img.mukewang.com/53951c720001996d04080225.jpg)
+
+### 浏览器窗口可视区域大小
+
+- 获得浏览器窗口的尺寸（浏览器的视口，不包括工具栏和滚动条）的方法:
+
+  **一、对于IE9+、Chrome、Firefox、Opera 以及 Safari：**
+
+  • window.innerHeight - 浏览器窗口的内部高度
+
+  • window.innerWidth - 浏览器窗口的内部宽度
+
+  **二、对于 Internet Explorer 8、7、6、5：**
+
+  • document.documentElement.clientHeight表示HTML文档所在窗口的当前高度。
+
+  • document.documentElement.clientWidth表示HTML文档所在窗口的当前宽度。
+
+  或者
+
+  Document对象的body属性对应HTML文档的\<body>标签
+
+  • document.body.clientHeight
+
+  • document.body.clientWidth
+
+  **在不同浏览器都实用的 JavaScript 方案：**
+
+  ```javascript
+  var w= document.documentElement.clientWidth
+        || document.body.clientWidth;
+  var h= document.documentElement.clientHeight
+        || document.body.clientHeight;
+  ```
+
+### 网页尺寸scrollHeight
+
+- scrollHeight和scrollWidth，获取网页内容高度和宽度。
+
+  **一、针对IE、Opera:**
+
+  scrollHeight 是网页内容实际高度，可以小于 clientHeight。
+
+  **二、针对NS、FF:**
+
+  scrollHeight 是网页内容高度，不过最小值是 clientHeight。也就是说网页内容实际高度小于 clientHeight 时，scrollHeight 返回 clientHeight 。
+
+  **三、浏览器兼容性**
+
+  ```javascript
+  var w=document.documentElement.scrollWidth
+     || document.body.scrollWidth;
+  var h=document.documentElement.scrollHeight
+     || document.body.scrollHeight;
+  ```
+
+  **注意:区分大小写**
+
+  scrollHeight和scrollWidth还可获取Dom元素中内容实际占用的高度和宽度。
+
+### 网页尺寸offsetHeight
+
+- offsetHeight和offsetWidth，获取网页内容高度和宽度(包括滚动条等边线，会随窗口的显示大小改变)。
+
+  **一、值**
+
+  offsetHeight = clientHeight + 滚动条 + 边框。
+
+  **二、浏览器兼容性**
+
+  ```javascript
+  var w= document.documentElement.offsetWidth
+      || document.body.offsetWidth;
+  var h= document.documentElement.offsetHeight
+      || document.body.offsetHeight;
+  ```
+
+### 网页卷去的距离与偏移量
+
+- ![](http://img.mukewang.com/5347b2b10001e1a307520686.jpg)
+
+- **scrollLeft:**设置或获取位于给定对象左边界与窗口中目前可见内容的最左端之间的距离 ，即左边灰色的内容。
+
+  **scrollTop:**设置或获取位于对象最顶端与窗口中可见内容的最顶端之间的距离 ，即上边灰色的内容。
+
+  **offsetLeft:**获取指定对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置 。
+
+  **offsetTop:**获取指定对象相对于版面或由 offsetParent 属性指定的父坐标的计算顶端位置 。
+
+  **注意:**
+
+  **1. 区分大小写**
+
+  **2. offsetParent：布局中设置postion属性(Relative、Absolute、fixed)的父容器，从最近的父节点开始，一层层向上找，直到HTML的body。**
+
+#### 编程练习：
+
+- 制作一个表格，显示班级的学生信息。
+
+  **要求：**
+
+  1. 鼠标移到不同行上时背景色改为色值为 #f2f2f2，移开鼠标时则恢复为原背景色 #fff
+
+  2. 点击添加按钮，能动态在最后添加一行
+
+  3. 点击删除按钮，则删除当前行
+
+- 遇上的问题：
+
+  - 1.给删除按钮添加点击事件后如何得知点击的这个删除的index，再将其删除
+
+    -    function deleteRow(obj){
+
+      ​    var tbody = document.getElementById('table').lastChild; 
+
+      ​    var tr = obj.parentNode.parentNode;
+
+      ​     tbody.removeChild(tr);
+
+         }
+
+  - 2.如何给表格添加一行
+
+    - ​    var tbody = document.getElementById('table').lastChild; 
+
+      ​    var tr = document.createElement('tr'); 
+
+      ​     
+
+      ​     var td = document.createElement("td");
+
+      ​     td.innerHTML = "<input type='text'/>";
+
+      ​     tr.appendChild(td);
+
+      ​     
+
+      ​     td = document.createElement("td"); 
+
+      ​     td.innerHTML = "<input type='text'/>";
+
+      ​     tr.appendChild(td);
+
+      ​     
+
+      ​     td = document.createElement("td"); 
+
+      ​     td.innerHTML = "<a href='javascript:;' onclick='deleteRow(this)'>删除</a>";
+
+      ​     tr.appendChild(td);  
+
+      ​     
+
+      ​     tbody.appendChild(tr);  
+
+      ​    Highlight();
+
