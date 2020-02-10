@@ -1,5 +1,7 @@
 # CSSfloat浮动
 
+[https://www.imooc.com/learn/121%20%20css%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8Bfloat](https://www.imooc.com/learn/121  css深入理解之float)
+
 ## float的特性
 
 - 最初float是用于给文字添加环绕效果，即为图片设置float属性 class="float-left"就能够实现文字环绕图片显示。
