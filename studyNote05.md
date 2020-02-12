@@ -385,7 +385,7 @@ arr.lastIndexOf(2, -3); // 1
 
 ```
 
-#### 判断数组
+#### 判断数组isArray
 
 ```javascript
 Array.isArray([]); // true
@@ -399,5 +399,51 @@ Array.isArray([]); // true
 
 ```
 
+### 数组小结
 
+#### 数组 VS 一般对象
+
+- 相同：
+
+  都可以继承，数组是对象，对象不一定是数组，
+
+  都可以当做对象添加删除属性
+
+- 不同：
+
+  数组自动更新length，按索引访问数组常常比访问一般对象属性明显迅速。
+
+  数组对象继承Array.prototype上的大量数组操作方法
+
+#### 数组 VS 字符串
+
+```javascript
+var str = "hello world";
+str.charAt(0); // "h"
+str[1]; // e
+
+Array.prototype.join.call(str, "_");
+// "h_e_l_l_o_ _w_o_r_l_d"
+
+```
+
+## Ch6
+
+### bind与new
+
+- bind方法：
+  - 1.改变this指向
+  - 2.科里化，把函数拆成不同功能子函数
+
+```javascript
+function foo() {
+    this.b = 100; //创建了全局变量b赋值为100
+    return this.a; //返回一个全局变量a属性
+}
+var func = foo.bind({a:1}); //用bind方法传入一个参数字面量属性a
+func();  //1 直接调用this会指向bind参数，执行this.a会返回1，由于执行了this.b，相当于对象会有一个属性b值为100,但不会作为返回值
+new func(); // {b:100} 
+//用new会更特殊，因为return不是对象，就会把this作为返回值，并且this会被初始化为默认的一个空对象，对象的原型是foo.prototype,这里用new调用虽然用了bind方法，但是this仍然会指向没有bind所指向的，这里的空对象b属性设置为100，整个对象又会作为返回值返回，忽略return。
+//用new调用，bind的方法对于this这个层面上就会被忽略掉
+```
 
