@@ -447,3 +447,77 @@ new func(); // {b:100}
 //用new调用，bind的方法对于this这个层面上就会被忽略掉
 ```
 
+## Ch7
+
+### 作用域
+
+- JavaScript中是**没有块级作用域的**，所以对于for循环中定义的变量和在for循环外定义的变量是一样的，都是全局变量。
+
+- 函数有自己独立的作用域,在函数外拿不到函数内的局部变量
+
+## Ch8
+
+### prototype属性&原型
+
+- prototype是函数对象上预设的对象属性，和原型不同
+- 原型是对象上的原型，原型通常是构造器的prototype属性
+
+#### 改变prototype
+
+- 当动态修改prototype的属性的时候，会影响所有已创建或新创建的实例；
+
+  ```javascript
+  Student.prototype.x = 101;
+  bosn.x; // 101
+  ```
+
+  
+
+- 但当修改了整个的prototype赋值为新的对象,已经创建的实例是不会被修改的，但会影响后续创建的实例。
+
+  ```javascript
+  Student.prototype = {y:2};
+  bosn.y; //undefinded
+  bosn.x; // 101
+  ```
+
+  ```javascript
+  var nunnly = new Student('nunnly',3,'a student');
+  nunnly.x; //undefinded
+  nunnly.y; //2
+  ```
+
+### instanceof
+
+- instanceof左边一般要求是一个对象，右边要求是一个函数或构造器，会判断右边的这个构造器的prototype属性是否出现在左边的这个原型链上。（若右边不是，会报错返回false）
+
+  ```javascript
+  [1, 2] instanceof Array === true
+  new Object() instanceof Array === false
+  ```
+
+  补充：
+
+  ```javascript
+  [1, 2] instanceof Object() === true
+  //因为随便一个数组的原型是Array.prototype,而Array.prototype的原型是Object.prototype,所以返回true
+  ```
+
+  
+
+### 实现继承的方式
+
+```javascript
+function Person() {
+}
+function Student() {
+}
+Student.prototype = Person.prototype; //1
+Student.prototype = new Person(); //2
+Student.prototype = Object.create(Person.prototype);//3
+Student.prototyoe.constructor = Person;
+//1的方法是错误的，这种方法在改写student的同时把person也改写了，但是有些是student特有而person没有的，所以错误。
+//2，用new的方法也实现了继承，但是因为调用了构造函数，只是为了继承，调用了一个构造函数，并没有创造实例，这样比较奇怪
+//用3比较好，Object.create方法创建了一个空对象，并且对象的原型指向了Person.prototype,既保证了继承person.prototype上的方法，并且student.prototype又有自己空的对象，自己的修改不会影响到原型链上的，利用了原型链写读向上查找的特性。
+```
+
