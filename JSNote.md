@@ -1108,7 +1108,303 @@ sum(1,3);//相当于 var a = 1; var b = 2;
   //123;undefined;NaN
   ```
 
+-  可以使用return来设置函数的返回值
+
+  语法: 
+
+  ​		 return 值
+
+  - return后的值将会作为函数的执行结果返回，可以定义一个变量，来接收该结果。
+  - 在函数中return后的语句都不会执行。
+  - 如果return语句后不跟任何值就相当于返回一个undefined，如果函数中不写return，也会返回undefined。
+  - return后可以跟任意类型的值
+
+```javascript
+//定义一个函数，判断一个数字是否是偶数，如果是则返回true，否则返回false
+function isOu (num) {
+   // if(num % 2 == 0){
+   //     return true;
+   // }else{
+   //     return false;
+   // }
+    return num % 2 == 0;
+}
+
+var result = isOu(3);
+console.log("result"+result);//false
+```
+
+```javascript
+//定义一个函数，可以根据半径计算一个圆的面积，并返回计算结果
+function area(num) {
+    return 3.14*num*num;
+}
+```
+
+- 实参可以是一个对象，也可以是一个函数
+  - area()    调用函数，相当于使用函数的返回值
+  - area       函数对象，相当于直接使用函数对象
+
+- 返回值可以是任意的数据类型，可以是对象，也可以是函数
+
+  ```javascript
+  function fun1(){
+      function fun2(){
+          console.log("fun2");
+      }
+      fun2();
+  }
+  
+  a = fun1();
+  console.log(a);//fun2
+  a();//调用fun2
+  //相当于 fun1()();
+  ```
+
   
 
-- 
+###### 31-立即执行的函数
 
+```javascript
+function() {
+    alert("我是一个匿名函数");
+}//直接这也写会报错，除非创建一个对象
+//用括号来把匿名函数圈起来表明这是一个整体，不是独立的，就不会报错
+(function() {
+    alert("我是一个匿名函数");
+})
+//调用——立即执行函数
+(function() {
+    alert("我是一个匿名函数");
+})();//在括号后加一对括号，表明函数定义完，立即被调用。
+//作用：立即执行函数往往只会执行一次
+
+(function(a,b){
+    console.log("a = "+a);
+    console.log("b = "+b);
+})(123,456);//立即执行函数也要传参数
+```
+
+##### 32-对象补充知识
+
+```javascript
+var obj = new Object();
+//向对象中添加属性
+obj.name = "孙悟空";
+obj.age = 18;
+//对象的属性值可以是任何的数据类型，也可以是个函数
+obj.sayName = function(){
+    console.log(obj.name);
+};
+function fun() {
+    console.log(obj.name);
+}
+//调方法
+obj.sayName();//孙悟空
+//调函数
+fun();
+```
+
+- 函数也可以称为对象的属性，如果一个函数作为一个对象的属性保存，那么我们称这个函数是这个对象的方法，调用这个函数就说调用对象的方法(method)，
+- 但这只是名称上的区别
+  - 调用obj的sayName方法
+
+###### 33-枚举对象中的属性 for ... in 语句
+
+```javascript
+var obj = {
+    name:"孙悟空",
+    age:18,
+    gender:"男",
+    address:"花果山"
+};
+//当想查看某个对象中的属性时，枚举对象中的属性
+//使用for ... in 语句
+for (var n in obj){
+    console.log("属性名"+n);
+    //console.log(obj[n]);//取属性值
+}//name age gender address
+```
+
+for ... in 语句
+
+- 语法：
+
+  ​	for (var 变量 in 对象){
+
+  }
+
+  - for ... in 语句 对象中有几个属性，循环体就会执行几次，每次执行时，会将对象中的一个属性的名字赋值
+
+##### 34-作用域
+
+- 作用域指一个变量的作用的范围
+
+- 在JS中一共有两种作用域：
+
+  - 1.全局作用域
+
+    - 直接编写在script标签中的JS代码，都在全局作用域
+
+    - 全局作用域在页面打开时创建，在页面关闭时销毁
+
+    - 在全局作用域中有一个全局对象window，它代表的是一个浏览器的窗口，它由浏览器创建我们可以直接使用
+
+    - 在全局作用域中：
+
+      - 创建的变量都会作为window对象的属性保存。
+
+        ```javascript
+        var a = 10;
+        console.log(a);
+        console.log(window.a);//a作为window对象的属性保存
+        ```
+
+    - 全局作用域中的变量都是全局变量，在页面的任意部分都可以访问的到
+
+  - 2.函数作用域
+
+    - 调用函数时创建函数作用域，函数执行完毕后，函数作用域销毁
+
+    - 每调用一次函数就会创建一个新的函数作用域，它们之间是相互独立的。
+
+    - 在函数作用域中可以访问到全局作用域的变量
+
+      - 在全局作用域中无法访问到函数作用的变量
+
+    - 当在函数作用域操作一个变量时，它会现在自身作用域中寻找，如果有直接使用，如果没有则向上一级作用域中寻找，直到找到全局作用域，
+
+      如果全局作用域依然没有找到，则会报错RefernceError
+
+    - 在函数中如果要访问全局的变量，就使用window.变量名 
+
+    ```javascript
+    //在函数作用域中也有声明提前特性，使用var关键字声明的变量，会在函数中所有代码执行之前被声明
+    //函数声明也会在函数中所有代码执行之前被声明
+    function fun() {
+        console.log(a);//undefined; //函数声明提前，所以返回undefined而不是报错
+        var a = 35;
+        
+        function fun2(){
+            alert("I am fun2");
+        }
+    }
+    fun();//会弹出alert框 
+    ```
+
+- 在函数中，不使用var声明的变量都会成为全局变量
+
+```javascript
+var c = 33;
+function fun3(){
+    console.log("c = "+c);
+    c = 10;
+}
+fun3();//c = 10;
+//函数中的c没有用var声明，所以就会找到全局中的变量，并将10赋给它，所以调用函数得到结果是10
+
+```
+
+```javascript
+function fun4(){
+    d = 100;//在函数中不使用var声明的变量都会变成全局变量，d没有使用var关键字，则设置为全局变量，相当于window.d = 100; 所以一般在函数中要使用var关键字声明变量
+}
+fun4();
+//在全局中输出c
+console.log("d = "+d);//d = 100;
+```
+
+```javascript
+var e = 23;
+function fun5() {
+    alert(e);
+}
+fun5();//23
+//若传参数
+function fun6(e) {
+    alert(e);
+}
+fun6();//undefined 
+//这里为啥是undefined?
+//因为定义形参就相当于在函数作用域中声明了变量 var e
+fun6(20);//20
+```
+
+
+
+
+
+###### 变量声明提前
+
+- 使用 var 关键字声明的变量，会在所有的代码执行之前被声明，但是如果声明比哪里时不使用var关键字，则变量不会被声明提前
+
+###### 函数声明提前
+
+- 使用函数声明形式创建的函数 function 函数() {}
+
+  它会在所有的代码执行之前就被创建，所以可以在函数声明前来调用函数。
+
+  使用函数表达式创建的函数，不会被声明提前，所以不能在声明前调用。
+
+  ```javascript
+  fun();//"111"
+  fun2();//报错，undefined is not a function
+  //函数声明，会被提前创建
+  function fun(){
+      console.log("111");
+  }
+  //函数表达式，不会被提前创建
+  var fun2 = function() { 
+  	console.log("222");
+  };//这是函数表达式，不能在声明之前使用
+  ```
+
+
+
+练习：
+
+```javascript
+var a = 123;
+function fun(){
+    alert(a);//这里的a是undefined，因为函数中用var关键字声明了变量a,只是此时还没有进行赋值（假如函数中没有声明变量a就会向上级查找到全局变量a,值为123)
+    var  a = 456;
+}
+fun();//undefined
+alert(a);//123；因为函数中修改的是局部的变量a，对全局的没有影响
+```
+
+```javascript
+var a = 123;
+function fun(){
+    alert(a);//函数中没有局部变量a，所以往上级查找
+    a = 456; //给全局变量a赋值
+}
+fun();//123
+alert(a);//456
+```
+
+```javascript
+var a = 123;
+function fun(a){
+    alert(a);
+    a = 456; 
+}
+fun();//undefined
+alert(a);//123
+```
+
+```javascript
+var a = 123;
+function fun(a){
+    alert(a);
+    a = 456; 
+}
+fun(123);//123 局部
+alert(a);//123 全局
+```
+
+
+
+##### 35-debug
+
+打断点看watch查看
