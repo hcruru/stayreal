@@ -1408,3 +1408,251 @@ alert(a);//123 全局
 ##### 35-debug
 
 打断点看watch查看
+
+##### 36-this
+
+- 解析器在调用函数每次都会向函数内部传递进一个隐含的参数，这个隐含的参数就是this。
+
+- this指向的是一个对象，这个对象我们成为函数执行的上下文对象，根据函数的**调用方式**不同，this会指向不同的对象：
+
+  - 1.以函数的形式调用时，this永远都是window
+  - 2.以方法的形式调用时，this就是调用方法的那个对象
+
+  ```javascript
+  function fun() {
+      console.log(this.name);
+  }
+  //创建一个对象 
+  var obj = {
+      name:"孙悟空",
+      sayName:fun
+  };
+  var name = "全局的name属性";
+  fun();// 全局的name属性
+  //[object window] 以函数形式调用，this是window
+  obj.sayName();//孙悟空 
+  //以对象的形式调用，this是调用方法的对象
+  ```
+
+  
+
+##### 37-使用工厂方法创建对象
+
+```javascript
+function createPerson(name, age, gender){
+    //创建一个新对象
+    var obj = new Object();
+    obj.name = name;
+    obj.age = age;
+    obj.gender = gender;
+    obj.sayName = function(){
+        alert(this.name);
+    };
+    //将新的对象返回
+    return obj;
+}
+
+var obj2 = createPerson("猪八戒",20,"男");
+var obj3 = createPerson("白骨精",20,"女");
+var obj4 = createPerson("蜘蛛精",20,"女");
+
+//使用工厂方法创建的对象，使用的构造函数都是Object
+//所以创建的对象都是Object这个类型，导致无法区分出多种不同类型的对象。（人也是Object,狗也是Object）
+```
+
+##### 38-构造函数
+
+- 创建一个构造函数，专门用来创建Person对象的（为了解决37种不管什么类型的人、物都是Object类型）
+
+- 构造函数就是一个普通的函数，创建方式和普通函数没有区别，不同的是构造函数习惯上首字母大写
+
+- 构造函数与普通函数的区别就是调用方式的不同，普通函数就是直接调用，而构造函数需要使用new关键字来调用。
+
+- 构造函数的执行流程
+
+  - 1.立刻创建一个新的对象
+
+  - 2.将新建的对象设置为函数中的this ，在构造函数中可以使用this来引用新建的对象
+
+    ```javascript
+    function Person(){
+        alert(this);//这个this就是新建的对象per
+        this.name = "孙悟空";
+    }
+    var per = new Person();
+    console.log(per);//[object Object]
+    ```
+
+  - 3.逐行执行函数中的代码
+
+  - 4.将新建的对象作为返回值返回
+
+```javascript
+//使用instanceof可以检查一个对象是否是一个类的实例
+//语法：
+//    对象 instanceof 构造函数 
+//   如果是返回true,否则返回false
+console.log(per instanceof Person);//true
+```
+
+
+
+```javascript
+//11111111
+function Person(name , age , gender) {
+    this.name = name;
+    this.age = age;
+    this.gender = gender;
+//    this.sayName = fun() {
+//      	alert("大家好，我是"+this.name);  
+//   };
+    //这种方法会导致构造函数每执行一次就会创建一个新的sayName方法，即所有实例的sayName方法都是唯一的；执行一次就创建一个新方法，执行一万次创建一万个，而这一万个方法都是一样的，是没有必要的，可以使所有对象共享一个方法。
+    this.sayName = fun; //向对象中添加一个新的方法
+}
+//将sayName方法在全局作用域中定义
+function fun() {
+  	alert("大家好，我是"+this.name);  
+};
+```
+
+11111111这个例子也有问题，当把sayName函数定义在全局作用域，污染了全局作用域的命名空间，而且定义在全局作用域中也很不安全。
+
+##### 39-原型 prototype
+
+- 我们所创建的每一个函数，解析器都会向函数中添加一个属性prototype
+
+  这个属性对应着一个对象，这个对象就是我们所谓的原型对象。
+
+- 如果函数作为普通函数调用prototype没有任何作用，当函数以构造函数的形式调用时，它所创建的对象中都会有一个隐含的属性
+
+  指向该构造函数的原型对象，我们可以通过 \_proto_ 来访问该属性 
+
+![](C:\Users\jimmy\AppData\Roaming\Typora\typora-user-images\image-20200223165308813.png)
+
+- 原型对象就相当于一个公共的区域，所有同一个类的实例都可以访问到这个原型对象。
+
+  可以将对象中共有的内容，统一设置到原型对象中
+
+  ```javascript
+  function MyClass() { 
+  }
+  //向MyClass的原型中添加属性a
+  MyClass.prototype.a = 123;
+  var mc = new MyClass();
+  console.log(mc.a);//123
+  ```
+
+  ![](C:\Users\jimmy\AppData\Roaming\Typora\typora-user-images\image-20200223165752520.png)
+
+- 当我们访问对象的属性和方法时，会现在对象自身中寻找，如果有则直接使用，如果没有则会取原型对象中寻找，如果找到则直接使用
+
+```javascript
+//修改11111111例子中的sayName方法
+
+//function fun() {
+//  	alert("大家好，我是"+this.name);  
+//};
+Person.prototype.sayName = function(){
+    alert("大家好，我是"+this.name);
+};//即确保了函数只有一个，又不影响到全局作用域
+```
+
+- 创建构造函数时，可以将这些对象共有的属性和方法，统一添加到构造函数的原型对象中，这也不用分别为每一个对象添加，也不会影响到全局作用域，就可以使每个对象都具有这些方法和属性了。
+
+###### 40-原型
+
+```javascript
+//22222222
+//使用in检查对象中是否含有某个属性时，如果对象中没有但是原型中有，也会返回true
+function MyClass(){
+}
+//向MyClass原型中添加一个name属性
+MyClass.prototype.name = "我是原型中的name";
+var mc = new MyClass();
+console.log("name" in mc);//true;使用in会找到原型去
+
+//使用对象的hasOwnProperty()来检查对象自身中是否含有该属性，该方法只有当对象中含有属性时，才会返回true
+console.log(mc.hasOwnProperty("name"));//false
+
+console.log(mc.hasOwnProperty("hasOwnProperty"));//false
+console.log(mc._proto_.hasOwnProperty("hasOwnProperty"));//false
+```
+
+- 原型对象也是对象，所以它也有原型，当我们使用一个对象的属性或方法时，会现在自身中寻找，
+
+  如果原型对象中有，则使用，如果没有则去原型的原型中寻找,
+
+  直到找到Object对象的原型，Object对象的原型没有原型，如果在Object中依然没有找到，则返回undefined
+
+```javascript
+//接上2222222
+console.log(mc._proto_._proto_.hasOwnProperty("hasOwnProperty"));//true
+```
+
+##### 41-toString
+
+- 当我们直接在页面中打印一个对象时，实际上是输出的对象的toString()方法的返回值
+
+##### 42-垃圾回收（GC）
+
+- 程序运行过程中也会产生垃圾，当垃圾积攒过多，会导致程序运行的速度过慢，需要一个垃圾回收的机制，来处理程序运行过程中产生的垃圾。
+- 当一个对象没有任何的变量或属性对它进行引用，此时我们将永远无法操作该对象，此时这种对象就是一种垃圾，这种对象过多会占用大量内存空间，导致程序运行变慢，所以这种垃圾必须进行清理。
+- 在JS中拥有自动的垃圾回收机制，会自动将这些垃圾对象从内存中销毁，我们不需要也不能进行垃圾回收的操作。
+- 我们需要做的只是要将不再使用的对象设置null即可。
+
+##### 43-数组
+
+数组（Array）也是一个对象。
+
+- 数组和普通对象功能类似，也是用来存储一些值的，不同的是普通对象是使用字符串作为属性名的，而数组使用数字作为索引操作元素
+
+  - 索引：从0开始的整数就是索引。
+
+- 数组的存储性能比普通对象号，在开发中经常使用数组来存储一些数据。
+
+  - 向数组中添加元素
+
+    语法：
+
+    ​	数组[索引] = 值
+
+  - 读取数组中的元素
+
+    语法：
+
+    ​	数组[索引]
+
+    ​		如果读取不存在的索引，不会报错而是返回undefined
+
+  - 获取数组的长度
+
+    语法：
+
+    ​	数组[length]
+
+    - 可以使用length属性来获取数组的长度（元素的个数）
+    - 对于连续的数组，使用length可以获取到数组的长度（元素的个数）
+    - 对于非连续的数组，使用length会获取到数组的最大索引+1
+    - 尽量不要创建非连续的数组
+
+  - 修改length
+
+    - 如果修改的length大于原长度，则多出部分会空出来
+    - 如果修改的length小于原长度，则多出的元素 会被删除
+
+  - 向数组的最后一个位置添加元素
+
+    语法：
+
+    ​	数组[数组.length] = 值;
+
+```javascript
+//创建数组对象
+var arr = new Array();
+console.log(typeof arr);//object
+//向数组中添加元素
+
+```
+
+
+
