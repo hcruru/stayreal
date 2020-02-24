@@ -1654,5 +1654,133 @@ console.log(typeof arr);//object
 
 ```
 
+##### 44-使用字面量创建数组
 
+```javascript
+//创建一个数组
+var arr = new Array();
+```
+
+```javascript
+//使用字面量
+var arr = [];
+```
+
+- 使用字面量创建数组时，可以在创建时就指定数组中的元素
+
+```javascript
+var arr = [1,2,3,4];
+```
+
+- 使用构造函数创建数组时，也可以同时添加元素，将要添加的元素作为构造函数的参数传递
+
+  ```javascript
+  var arr2 = new Array(10,20,30);
+  //创建一个长度为10的数组
+  arr2 = new Array(10);
+  //创建一个数组，数组中只有一个元素10
+  arr = [10];
+  ```
+
+- 数组中的元素可以是任意的数据类型
+
+- 数组中也可以放数组
+
+  arr = [[1,2,3],[3,4,5],[4,5,6]]; //二维数组
+
+  console.log(arr[0]);// 输出第一个数组
+
+  
+
+##### 45-数组的方法
+
+```javascript
+var arr = ["monkey","pig","dog"];
+arr.push("person");
+```
+
+- push()
+
+  - 该方法可以向数组的末尾添加一个或多个元素，并返回数组的新长度
+
+    可以将要添加的元素作为方法的参数传递，这样这些元素将会自动添加到数组的末尾
+
+- pop()
+  
+  - 该方法可以删除数组的最后一个元素，并将删除的元素作为返回值返回
+- unshift()
+  - 向数组的开头添加一个或多个元素，并返回新的数组长度
+  - 向前边插入元素以后，其它的元素索引会依次向后调整
+- shift()
+  
+  - 可以删除数组的第一个元素，并将被删除的元素作为返回值返回
+
+##### 46-数组的遍历
+
+```javascript
+var arr = ["monkey","pig","dog"];
+//所谓遍历数组，就是将数组中的所有元素都取出来
+console.log(arr[0]);//第一个
+console.log(arr[1]);//第一二个
+```
+
+```javascript
+//创建一个函数，可以将perArr中的满18岁的Person提取出来，然后封装到一个新的数组中并返回
+
+function Person(name , age , gender){
+    this.name = name;
+    this.age = age;
+}
+//修改Person原型的toString
+Person.prototype.toString = function(){
+    return "Person[name="+this.name+",age="+this.age+"]";
+};
+
+//创建一个Person对象
+var per = new Person("monkey",18);
+var per2 = new Person("pig",28);
+var per3 = new Person("dog",58);
+var per4 = new Person("cat",15);
+var per5 = new Person("horse",18);
+//将person对象放入到一个数组中
+var perArr = [per,per2,per3,per4,per5];
+
+//arr, 形参，要提取信息的数组
+function getAdult(arr){
+    //创建一个新的数组
+    var newArr = [];
+    //遍历arr,获取arr中Person对象
+    for(var i=0; i<arr.length ; i++ ) {
+        var p = arr[i];
+        //console.log(arr[i]);
+    }
+    //判断Person对象的age是大于等于18
+    if(p.age >= 18){
+    //如果大于等于18，则将这个对象添加到newArr中
+    	newArr.push(p);
+    }
+    //将新的数组返回
+    return newArr[];
+}
+
+var resule = getAdult(perArr);
+//console.log(result);
+```
+
+###### 47-forEach
+
+- JS中提供了一个方法来遍历数组，但这个方法只支持IE8以上的浏览器
+- forEach()方法需要一个函数作为参数
+  - 像这种函数，由我们创建但是不由我们调用的，成为回调函数
+  - 数组中有几个函数，就会执行几次，每次执行时，浏览器会将遍历到的元素以实参的形式传递进来，我们可以定义形参，来读取这些内容。
+  - 浏览器会在回调函数中传递三个参数
+    - 第一个参数，就是当前正在遍历的元素
+    - 第二个参数，当前正在遍历元素的索引
+    - 第三个参数，当前正在遍历的数组
+
+```javascript
+arr.forEach(function() {
+    console.log("hhh");
+});
+```
 
