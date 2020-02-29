@@ -2306,3 +2306,135 @@ cosnole.log(result);//6
 
 ##### 55-邮件规则
 
+hello .nihao @ abc .com .cn
+
+任意字母数字下划线 .任意字母数字下划线 @ 任意字母数字 .任意字母（2-5位） .任意字母（2-5位）
+
+\w{3,} (\\.\w+)*  @  [A-z0-9]+   (\\.[A-z]{2,5}){1,2} 
+
+```javascript
+var emailReg = /^\w{3,}(\\.\w+)*[A-z0-9]+(\\.[A-z]{2,5}){1,2}$/;// ^ 和 $ 不能少 表明整个邮件是一个整体
+var email = "abc.hello@163.com";
+console.log(emailReg.test(emal));
+```
+
+- 平时可以去找常用的正则表达式
+
+#### DOM-Document Object Model
+
+文档对象模型
+
+##### 56-DOM
+
+- 作用：JS通过DOM来操作网页
+
+- 文档：
+
+   	   - 表示整个HTML网页文档
+
+- 对象：
+
+  ​		- 将网页中的每一个部分都转换为了一个对象
+
+- 模型：
+
+  ​		- 使用模型来表示对象之间的关系，方便获取对象。
+
+##### 57-事件
+
+- 就是文档或浏览器窗口中发生的一些特顶的交互瞬间。（用户和浏览器之间的交互行为：点击按钮，移动鼠标，关闭窗口等）
+- JS与HTML之间的交互是通过事件实现的
+
+###### onload
+
+- 在整个页面加载之后才触发
+
+- 为window绑定一个onload事件
+
+  - 该事件对应的响应函数会在页面加载完成之后执行，这也可以确保代码执行时所有的DOM对象已经加载完毕了
+
+  ```java
+  window.onload = function(){
+      alert("hello");
+  };
+  ```
+
+###### 获取元素节点
+
+- 通过document对象调用
+  - 1.getElementById() 通过id获取一个元素节点对象
+  - 2.getElementsByTagName() 通过标签名获取一组元素节点对象
+  - 3.getElementsByName() 通过name获取一组元素节点对象
+- 
+- innerHTML用于获取元素内部的HTML代码
+  - 对于自结束标签，这个属性没有意义
+- 如果需要读取元素节点属性，直接使用 元素.属性名
+  - 元素.id 元素.name 元素.value
+  - 但：class属性不能采用这种方式，因为class是JS中的保留字,所有读取class属性时需要使用 **元素.className**
+
+###### childNodes
+
+- 获取所有子节点，包括空白文档
+
+###### children
+
+- 获取当前元素的所有子元素
+
+###### firstChild
+
+- 可以获取到当前元素的第一个子节点(包括空白文本节点)
+- lastChild同理
+
+###### firstElementChild
+
+- 获取当前元素的第一个子元素（不包括空白
+- 但此方法只支持ie9以上的浏览器
+
+##### 58-DOM查询剩余的方法
+
+###### body
+
+- 在document中有个属性body，它保存的是body的引用
+
+  ```javascript
+  var body = document.body;
+  ```
+
+###### html
+
+- document.documentElement保存的是html根标签
+
+  ```javascript
+  var html = document.documentElement;
+  ```
+
+###### all
+
+- document.all代表页面中的所有元素
+
+  ```javascript
+  var all = document.all;
+  all = document.getElementsByTagName("*");
+  //两种方法相同 得到的length都是一样的
+  ```
+
+###### 根据元素的class属性查询一组元素节点对象
+
+getElementsByClassName() 该方法不支持IE8以下的浏览器
+
+###### querySelector()
+
+- 需要一个选择器的字符串作为参数，可以根据一个CSS选择器来查询一个元素节点对象.
+
+  - 虽然IE8中没有getElementsByClassName,但是可以使用querySelector()代替
+
+  ```javascript
+  document.querySelector(".box1 div");
+  ```
+
+- 使用该方法总会返回唯一的一个元素，如果满足条件的元素有多个，那么它只会返回第一个
+
+###### querySelectorAll()
+
+- 该方法和querySelector()类似，不同的是它会将符合条件的元素封装得到一个数组中返回
+- 即使符合条件的元素只有一个，也会返回一个数组
