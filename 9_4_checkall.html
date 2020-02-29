@@ -93,7 +93,10 @@
             //     alert("请重新输入(1-6)的数字！");
             //   }
         }
-        
+        //1.假如要设置反选 hobby[i].checked = !hobby[i].checked; 即可，比用函数判断简洁很多
+        //2.假如要所有选项和某个复选框的状态相同，在for循环中设置单个的checked属性与那个指定复选框属性相同
+        // 例 hobby[i].checked = checkedAllBox.checked;
+        //2中更妙的方法是使用this，在事件的响应函数中，响应函数是给谁绑定的,this就是谁
         </script>
     </body>
 </html>
