@@ -2438,3 +2438,244 @@ getElementsByClassName() 该方法不支持IE8以下的浏览器
 
 - 该方法和querySelector()类似，不同的是它会将符合条件的元素封装得到一个数组中返回
 - 即使符合条件的元素只有一个，也会返回一个数组
+
+##### 59-DOM增删改
+
+###### createElement()
+
+- document.createElement()
+
+  可以用于创建一个元素节点对象，
+
+  它需要一个标签名作为参数，将会根据该标签名创建元素节点对象，并将创建好的对象作为返回值返回。
+
+  ```javascript
+  11111111
+  //创建一个广州节点<li>广州</li>
+  //创建li元素节点
+  var li = document.createElement("li");
+  ```
+
+###### createTextNode()
+
+- document.createTextNode()
+
+  可以用来创建一个文本节点对象
+
+  需要一个文本内容作为参数，将会根据该内容创建文本节点，并将新的节点返回
+
+  ```javascript
+  22222222
+  //创建广州文本节点
+  var gzText = document.createTextNode("广州");
+  ```
+
+###### appendChild()
+
+- appendChild()
+
+  向一个父节点中添加一个新的字节点
+
+  用法：父节点.appendChild(字节点);
+
+  ```javascript
+  33333333
+  li.appendChild(gzText);
+  //获取id为city的节点
+  var city = document.getElementById("city");
+  //将广州添加到city下
+  city.appendChild(li);
+  ```
+
+  
+
+**11111111-3333333 是创建一个节点并添加**
+
+###### insertBefore()
+
+- 可以在指定**子节点**前插入新的字节点
+
+  语法：
+
+  ​	父节点.insertBefore(新节点，旧节点);
+
+```javascript
+44444444
+//将"广州"节点插入到#bj前面
+myClick("btn02",function(){
+    //创建一个广州
+    var li = document.getElementById("li");
+    var gzText = document.createTextNode("广州");
+    li.appendChild(gzText);
+    //获取id为bj的节点
+    var bj = document.getElementById("id");
+    //获取city
+    var city = document.getElementById("city");
+    city.insertBefore(li , bj);
+});
+```
+
+###### replaceChild()
+
+- 可以使用指定的子节点替换已有的字节点
+
+  语法：
+
+  ​	父节点.replaceChild(新节点,旧节点);
+
+```javascript
+55555555
+//使用“广州”节点替换#bj节点
+myClick("btn03",function(){
+    //创建一个广州
+    var li = document.getElementById("li");
+    var gzText = document.createTextNode("广州");
+    li.appendChild(gzText);
+    //获取id为bj的节点
+    var bj = document.getElementById("id");
+    //获取city
+    var city = document.getElementById("city");
+    city.replaceChild(li , bj);
+});
+```
+
+###### removeChild()
+
+- 可以删除一个字节点
+- 语法：
+  - 父节点.removeChild(字节点);
+  - 字节点.parentNode.removeChild(字节点);
+    - 当不知道父节点是什么的时候，使用parentNode
+
+```javascript
+66666666
+//删除#bj节点
+myClick("btn04",function(){
+
+    //获取id为bj的节点
+    var bj = document.getElementById("id");
+    //获取city
+    //var city = document.getElementById("city");
+    //city.removeChild(bj);
+    bj.parentNode.moveChild(bj);
+});
+```
+
+###### innerHTML
+
+```javascript
+//读取#city内的HTML代码
+myClick("btn05",function(){
+    //获取city
+    var city = document.getElementById("city");
+    alert(city.innerHTML);
+});
+```
+
+```javascript
+//设置#bj内的HTML代码
+myClick("btn06",function(){
+    //获取bj
+    var bj = document.getElementById("bj");
+    bj.innerHTML = "昌平";
+});
+```
+
+```javascript
+//向city中添加广州使用innerHTML方法
+myClick("btn07",function(){
+    //获取bj
+    var city = document.getElementById("city");
+    //city.innerHTML = "<li>广州</li>";只这样写会导致所有按钮都消失变为只有一个广州
+    city.innerHTML += "<li>广州</li>";
+    //改成+= 就会在原来的基础上添加一个广州
+    //但是！！这个方法虽然简单，但是每次修改都会把原来所有内容先删除再增加，动静太大，不建议这么用
+});
+```
+
+- 使用innerHTML也可以完成DOM的增删改相关操作，一般会两种方式结合使用
+
+```javascript
+//创建一个li
+var li = document.createElement("li");
+//向li中设置文本
+li.innerHTML = "广州";
+//将li添加到city中
+city.appendChild(li);
+```
+
+###### 练习-添加删除记录
+
+- 想要使超链接点击后不跳转有两种方法：
+  - 1.在函数里设置 返回 return false；
+  - 2.在HTML代码设置超链接 href="javascript:;"
+
+```javascript
+
+```
+
+##### 60-操作内联样式
+
+- 通过JS修改元素的样式：
+
+  语法：元素.style.样式名 = 样式值
+
+- 注意：
+
+  ​		如果CSS的样式种含有 - ,
+
+  ​		这种名称在JS中是不合法的,如background-color,需要将这种样式改为驼峰命名法，去掉-，然后将-后的字母大写
+
+- 我们通过style属性设置的样式都是内联样式，而内联样式有较高的优先级，所以通过JS修改的样式往往会立即执行。
+
+  - 但如果写了!important，则此时样式会有最高的优先级，即使通过JS也不能覆盖该样式，此时将会导致JS修改样式失效，所以尽量不要为样式添加!important
+
+- 通过style属性设置和读取的都是内联样式，无法读取样式表中的样式
+
+###### getComputedStyle()
+
+- 用这个方法来获取当前的样式 (currentStyle.width只有IE能用)，该方法不支持IE8及以下浏览器,通过currentStyle和getComputedStyle()读取到的样式都是只读的，不能修改，如果要修改必须通过style属性
+
+- 这个方法是window的方法，可以直接使用
+
+  - 参数：
+
+    1.要获取样式的元素
+
+    2.可以传递一个伪元素，一般都传null
+
+  - 该方法会返回一个对象，对象中封装了当元素对应的样式,通过 对象.样式名来读取样式
+
+    如果获取的样式没有设置，则会获取到真实的值，而不是默认值
+
+    ​	如：没有设置width，不会获取到auto，而是一个长度
+
+```javascript
+var obj = getComputedStyle(box1.nll);
+alert(obj.width);
+```
+
+###### 获取指定元素的当前样式
+
+- 定义一个函数，获取指定元素的当前样式
+
+  参数：
+
+  ​	obj 要获取样式的元素
+
+  ​	name 要获取的样式名
+
+```javascript
+function getStyle(obj, name) {
+    //正常浏览器的方式
+    //return getComputedStyle(obj, null)[name];
+    //IE8的方式
+    //return obj.currentStyle[name];
+    if(window.getComputedSyle){//如果不加window. 原来的getComputedSyle是一个变量，要去作用域中寻找，如果没找到就会报错，但是加了window之后就是一个属性，没找到就返回undefined
+        return getComputedStyle(obj, null)[name];
+    }else{
+        return obj.currentStyle[name];
+    }
+}
+```
+
