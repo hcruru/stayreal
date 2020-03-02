@@ -2679,3 +2679,249 @@ function getStyle(obj, name) {
 }
 ```
 
+##### 61-其它样式的相关属性
+
+###### clientWidth clientHeight
+
+- 这两个属性可以获取元素的可见宽度和高度
+- 这些恶属性都是不带px的，返回都是一个数字，可以直接进行计算，如果是直接获取width,height得到的结果有px
+- 会获取元素的宽度和高度，包括内容区和内边距
+- 这些属性都是只读的，只能读不能修改
+
+###### offsetWidth offsetHeight
+
+- 获取元素的整个的宽度和高度，包括内容取、内边距和边框
+
+###### offsetParent
+
+- 可以用来获取当前元素的定位父元素
+- 会获取到离当前元素最近的开启了定位的祖先元素
+  - 如果所有的祖先元素都没有开启定位，则返回body
+
+###### offsetLeft 
+
+- 当前元素相对于其定位父元素的水平偏移量
+
+###### offsetTop
+
+- 当前元素相对于其定位父元素的垂直偏移量
+
+###### scrollWidth scorllHeight
+
+- 可以获取元素整个滚动区域的宽度和高度
+
+###### scrollLeft scrollTop
+
+- 可以获取水平、垂直滚动条滚动的距离
+
+```javascript
+//当满足scrollHeight - scrollTop == clientHeight说明垂直滚动条滚动到底了
+//当满足scrollWidth - scrollLeft == clientHeight说明水平滚动条滚动到底了
+这玩意儿可以判断滚动条是否滚动到底来判断用户是否阅读完某个页面
+```
+
+###### onscroll
+
+- 该事件会在元素的滚动条滚动时触发
+
+```javascript
+//获取id为info的p元素
+var info = document.getElementById("info");
+
+//获取两个表单项
+var inputs = document.getElementsByTagName("input");
+
+//为info绑定一个滚动条滚动事件
+info.onscroll = funtion(){
+    //检查垂直滚动条是否滚动到底
+    if(info.scrollHeight - info.scrollTop == info.clientHeight){
+        //滚动条滚动到底，使表单项可用
+        inputs[0].disabled = false;
+        inputs[1].disabled = false;
+    }
+}
+```
+
+##### 62-事件对象
+
+###### onmousemove
+
+- 该事件将会在鼠标在元素中移动时被触发
+
+###### 事件对象
+
+- 当事件的响应函数被触发时，浏览器每次都会将一个事件对象作为实参传递进响应函数，
+
+  当事件对象中封装了当前事件相关的一切信息，如：鼠标的坐标 键盘哪个按键被按下 鼠标滚轮滚动的方向
+
+  ```javascript
+  //在IE8中，响应函数被触发时，浏览器不会传递事件对象，在IE8及以下浏览器中，是将事件对象作为window对象的属性保存的
+  areaDiv.onmousemove = function(event){
+      if(!event){
+          event = window.event;
+      }
+      
+      //这个if语句直接改为这个
+      // event = event || window.event;
+      //用于解决事件对象的兼容性问题
+      
+      //clientX可以获取鼠标指针的水平坐标
+      //clientY可以获取鼠标指针的垂直坐标
+      var x = event.clientX;
+      var y = event.clientY;
+      //在shwowMsg中显示鼠标的坐标
+      showMsg.innerHTML = "x = "+x +", y = "+y;
+  }
+  ```
+
+  
+
+##### 63-div跟随鼠标移动
+
+p112
+
+##### 64-事件的冒泡
+
+- 所谓的冒泡指的是事件的向上传导，当后代元素上的事件被触发时，其祖先元素的相同事件也会被触发，
+
+  在开发中大部分情况冒泡都是有用的，如果不希望发生事件冒泡可以通过事件的对象来取消冒泡
+
+  ```javascript
+  //取消冒泡
+  //可以将事件对象的cancelBubble设置为true，即可取消冒泡
+  event.cancelBubble = true;
+  ```
+
+  
+
+##### 65-事件的委派
+
+- 我们希望，只绑定一次事件，即可应用到多个元素上，即使元素是后添加的，我们可以尝试将其绑定给元素的共同的祖先元素
+
+- 事件的委派：
+
+  - 指将事件统一绑定给元素的共同的祖先元素，这样当候待元素上的事件触发时，会一直冒泡到祖先元素，从而通过祖先元素的响应函数来处理事件。
+
+  - 事件委派是利用了冒泡，通过委派可以减少事件绑定的次数，提高程序的性能
+
+    【但】如果不设置特别触发事件，会导致所有子元素都会触发，而不是我们所期望的元素。
+
+    ```javascript
+    //为ul绑定一个单击响应函数
+    ul.onclick = function(event){
+        event = event || window.event;
+        //target
+        // - event中的target表示触发事件的对象
+        //如果触发事件的对象是我们期望的元素，则执行，否则不执行
+        if(event.target.className == "link"){
+            alert("我是ul的单击响应函数");
+        }//link 是超链接a的class name 
+        //这里这样判断可能有点小问题
+    }
+    ```
+
+    
+
+##### 66-事件的绑定
+
+###### addEventListener()
+
+- 通过这个方法可以为元素绑定响应函数
+
+- 参数:
+
+  - 1.事件的字符串,不要on 
+
+  - 2.回调函数，当事件触发时该函数会被调用
+
+  - 3.是否在捕获阶段触发事件，需要一个布尔值，一般都传false
+
+    
+
+    ```javascript
+    btn.addEventListener("click",function(){
+        alert(1);
+    },false);
+    btn.addEventListener("click",function(){
+        alert(2);
+    },false);
+    //这种绑定方法会先弹出1，再弹出2，而普通的只会弹出2，1被覆盖掉了
+    ```
+
+- 使用addEventListener()可以同时为一个元素的相同事件同时绑定多个响应函数，这样当事件被触发时，响应函数将会按照函数的绑定顺序执行
+
+该方法不支持IE8及以下浏览器
+
+attachEvent()
+
+- 再IE8中使用attachEvent()来绑定事件
+
+- 参数：
+
+  - 1.事件的字符串，要on
+
+  - 2.回调函数
+
+    ```javascript
+    btn.attachEvent("onclick",function(){
+        alert(1);
+    });
+    btn.attachEvent("onclick",function(){
+        alert(2);
+    });//得到结果是倒序，2，1
+    ```
+
+- 该方法也可以同时为一个事件绑定多个处理函数，不同的是它是后绑定先执行，执行顺序和addEventListener()相反，
+
+```javascript
+//定义一个函数，用来为指定元素绑定响应函数
+//addEventListener()中的this，是绑定事件的对象
+//attachEvent()中的this，是window，需要统一两个方法this
+//参数： 
+//	obj 要绑定事件的对象
+//	eventStr 事件的字符串(不要on)
+//	callback 回调函数
+function bind(obj , eventStr , callback){
+    if(obj.addEventListener){
+    //大部分浏览器兼容的方式
+    obj.addEventListener(eventStr , callback, false);        
+    }else{
+    //this是谁由调用方式决定
+    //该方法得到的是object window而不是大部分浏览器的button
+    //callback.call(obj)
+        
+    //IE8及以下
+    //obj.attachEvent("on"+eventStr, callback); 
+	  obj.attachEvent("on"+eventStr, function(){
+          //在匿名函数中调用回调函数，浏览器调用匿名函数，匿名掉回调
+          callback.call(obj);//指定了this
+          //这样IE8得到的也是button了
+      });
+    }
+}
+```
+
+##### 67-事件的传播
+
+- 事件的传播：
+  - 不同公司有不同理解:
+  - 微软公司认为事件应该是由内向外传播，也就是当事件触发时，应该先触发当前元素上的事件，然后再向当前元素的祖先元素上传播，也就是说事件应该在冒泡阶段执行。
+  - 王景公司认为事件应该由外向内传播，也就是当事件触发时，应当先触发当前元素的最外层的祖先元素的事件，然后再向内传播给后代元素。
+  - W3C综合两个公司方案，将事件传播分成了三个阶段：
+    - 1.捕获阶段
+      - 在捕获阶段时从最外层的祖先元素，向目标元素进行事件的捕获，但是默认此时不会触发事件
+    - 2.目标阶段
+      - 事件捕获到目标元素，捕获结束开始在目标元素上触发事件
+    - 3.冒泡阶段
+      - 事件从目标元素向他的祖先元素传递，依次触发祖先元素上的事件
+    - 如果希望在捕获阶段就触发事件，可以将addEventListener()第三个参数设置为true，一般情况下不会希望在捕获阶段触发事件，所以这个参数一般是false
+  - IE8及以下浏览器中没有捕获阶段
+
+##### 
+
+##### 68-拖拽
+
+- 流程：
+  - 1.当鼠标在被拖拽元素上按下时，开始拖拽onmousedown
+  - 2.当鼠标移动时被拖拽元素跟随鼠标移动onmousemove
+  - 3.当鼠标松开时，被拖拽元素固定在当前位置onmouseup
