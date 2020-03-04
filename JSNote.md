@@ -3034,3 +3034,47 @@ var timer = setInterval(function(){
 
 ```
 
+##### JSON
+
+- JS中的对象只有JS自己认识，其它的语言都不认识
+
+- JSON就是一个特殊格式的字符串，这个字符串可以被任意的语言识别，并且可以转换为任意语言中的对象，JSON在开发中主要用来数据的交互
+
+- JSON 
+
+  - JavaScript Object Notation JS对象表示法
+
+  - JSON和JS对象的格式一样，只不过JSON字符串的属性名必须加双引号，其它和JS语法一致
+
+- JSON分类：
+
+  - 1. 对象{ }
+    2. 数字[ ]
+
+- JSON中允许的值：
+  - 1. 字符串
+    2. 数字
+    3. 布尔值
+    4. null
+    5. 对象
+    6. 数组
+
+- 将JSON字符串转换为JS中的对象
+
+  - 在JS中，提供了一个工具，叫JSON
+  - 这个对象帮助我们将一个JSON转换为JS对象，也可以将一个JS对象转换为JSON
+
+  json --->js
+
+  ​	JSON.parse()
+
+  	- 可以将一JSON字符串转换为JS对象
+  	- 它需要一个JSON字符串作为参数，会将该字符串转换为JS对象
+
+​       JS---->JSON
+
+​			JSON.stringify()
+
+​		     -可以将一个JS对象转换为JSON字符串
+
+​			 - 需要一个JS对象作为参数，会返回一个JSON字符串
