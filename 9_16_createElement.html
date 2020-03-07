@@ -1,0 +1,46 @@
+<!-- <!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+</head>
+<body>
+<script type="text/javascript">
+var main = document.body;
+//创建链接
+function createa (url,text)
+{
+    var a = document.createElement("a");
+    a.href = url;
+    a.innerHTML = text;
+    a.style.color = "red";
+    main.appendChild(a);
+}
+// 调用函数创建链接
+ createa("https://www.baidu.com/","baidu")
+
+</script> 
+</body>
+</html> -->
+
+<!-- 9_19网页尺寸scrollHeight -->
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+
+</head>
+<body>
+<script type="text/javascript">
+    document.write(document.documentElement.scrollWidth+"<br/>");
+    document.write(document.body.scrollWidth+"<br/>");
+    document.write(document.documentElement.scrollHeight+"<br/>");
+    document.write(document.body.scrollHeight+"<br/>");
+    document.write("<br/>");
+    document.write(document.body.offsetWidth+"<br/>");
+    document.write(document.documentElement.offsetHeight+"<br/>");
+    document.write(document.body.offsetHeight+"<br/>");    
+
+</script>
+</body>    
+</html>
