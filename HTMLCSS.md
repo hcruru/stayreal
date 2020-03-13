@@ -543,3 +543,378 @@ CSS用来设置网页中元素的样式
     ​	行内元素脱离文档流以后会变成块元素，特点和块元素一样
 
   - 脱离文档流以后，不需要再区分块和行内了
+
+#### 高度塌陷问题
+
+- 在浮动布局中，父元素的高度默认是被子元素撑开的，当子元素浮动后，其会完全脱离文档流，子元素会从文档流中脱离将会无法撑起父元素的高度，导致父元素的高度丢失
+
+  父元素高度丢失后，其下的元素会自动上移，导致页面布局混乱
+
+  
+
+#### BFC（Block Formatting Context)块级格式化环境
+
+- BFC是CSS中的一个隐含的属性，可以为一个元素开启BFC，该元素会变成一个独立的布局区域
+- 元素开启BFC后的特点：
+  1. 开启BFC的元素不会被浮动元素所覆盖
+  2. 开启BFC的元素子元素和父元素外边距不会重叠
+  3. 开启BFC的元素可以包含浮动的子元素
+- 可以通过一些特殊的方式来开启元素的BFC：
+  1. 设置元素的浮动（宽度会丢失）--不推荐
+  2. 讲元素设置为行内块（宽度也会丢失）--不推荐
+  3. 将元素的overflow设置为非visible的值
+     - 常用的方式，为元素设置overflow:hidden 开启其BFC 以使其可以包含浮动元素
+
+##### clear
+
+- 如果不希望某个元素因为其它元素浮动的影响而改变位置，看可以使用clear属性来清除浮动元素对当前元素所产生的影响。
+
+- 作用：清除浮动元素对当前元素所产生的影响
+- 可选值：
+  - left 清除左侧浮动元素对当前元素的影响
+  - right 清除右侧浮动元素对当前元素的影响
+  - both 清除两侧中最大影响的那侧
+- 原理：
+  - 设置清除浮动以后，浏览器会自动为元素添加一个上外边距，使其位置不受其它元素影响
+
+#### 高度塌陷最终解决方案
+
+- 使用after伪元素来解决高度塌陷
+
+```html
+<div class="box1">
+	<div class="box2">
+        <!-- <div class="box3"></div> --> 
+    </div>
+</div>
+```
+
+```css
+.box1{
+    border:10px red solid;/* 为父元素设置一个红色边框 */
+}
+.box2{
+    width:100px;
+    height:100px;
+    background-color:#bfa;
+    float:left;
+    /*让子元素box2浮动*/
+}
+/* 这种为box3设置清除浮动的方式，是在使用html来改变结构，但是目的是为了修改样式，所以应该使用css来操作而不是采用html*/
+/*设置box3清除浮动后，box3就会跟着box2，即使box2浮动，box3依然可以撑开父元素，达到父元素根据子元素的内容而改变大小*/
+/*
+.box3{
+    clear:both;
+}*/
+
+/*在box1后添加一个伪元素，通过css的方式来达到效果而不是html改变结构的方式*/
+.box1::after{ 
+    content:'';/*将伪元素内容设置为空*/
+    display:block;/*将伪元素改为块级元素*/
+    clear:both;/*清除浮动*/
+}
+```
+
+###### clearfix
+
+- clearfix 这个样式可以同时解决高度塌陷和外边距重叠的问题，当遇到这些问题，直接使用clearfix即可。
+
+  ```html
+  <div class="box1">
+  	<div class="box2"></div>
+  </div>
+  ```
+
+  ```css
+  .box1{
+      width:200px;
+      height:200px;
+      background-color:#bfa;
+  }
+  .box2{
+      width:100px;
+      height:100px;
+      background-color:orange;
+      margin-top:100px;
+  }
+  .clearfix::before,
+  .clearfix::after{
+      content:'';
+      display:table;
+      clear:both;
+  }
+  
+  ```
+
+  
+
+### 定位
+
+- 定位（position）是一种更高级的布局手段
+
+- 通过定位可以将元素摆放到页面的任意位置
+
+- 使用position属性来设置定位
+
+  可选值：
+
+  ​	static 默认值，元素是静止的没有开启定位
+
+  ​	relative 开启元素的相对定位
+
+  ​	absolute 开启元素的固定定位
+
+  ​	fixed 开启元素的固定定位
+
+  ​	sticky 开启元素的沾滞定位
+
+#### 相对定位
+
+- 当元素的position属性值设置为relative时则开启了元素的相对定位
+
+- 相对定位的特点：
+
+  1. 元素开启相对定位以后，如果不设置偏移量元素不会发生任何变化
+  2. 相对定位是参照于元素在文档流中的位置进行定位的
+  3. 相对定位会提升元素的层级
+  4. 相对定位不会使元素脱离文档流
+  5. 相对定位不会改变元素的性质，块还是块，行内还是行内
+
+- 偏移量（offset）
+
+  - 当元素开启了定位以后，可以通过偏移量来设置元素的位置
+
+    top
+
+    - 定位元素和定位位置上边的距离
+
+    bottom
+
+    - 定位元素和定位位置下边的距离
+
+    - 定位元素垂直方向的位置由top和bottom两个属性来控制，通常只会使用其中一个
+      - top 值越大，定位元素越向下移动
+      - bottom值越大，定位元素越向上移动
+
+    left
+
+    - 定位元素和定位位置左侧的距离
+
+    right
+
+    - 定位元素和定位位置右侧的距离
+    - 定位元素水平方向的位置由left和right两个属性来控制，通常只会使用其中一个
+      - left越大元素越靠右
+      - right越大元素越靠左
+
+#### 绝对定位
+
+- 当元素的position属性值设置为absolute时，则开启了元素的绝对定位
+
+- 绝对定位的特点：
+
+  1. 开启绝对定位后，如果不设置偏移量元素的位置不会发生变化
+  2. 开启绝对定位后，元素会从文档流中脱离
+  3. 绝对定位会改变元素的性质，行内变成块，块的高度被内容撑开
+  4. 绝对定位会使元素提升一个层级
+  5. 绝对定位元素是相对于其包含块进行定位的
+
+  包含块（ containing block）
+
+  - 正常情况下：
+
+    包含块就是离当前元素最近的祖先块元素
+
+  - 绝对定位的包含块：
+
+    - 包含块就是离它最近的的祖先元素，如果所有的祖先元素都没有开启定位，则根元素就是它的包含块
+
+  - html(根元素、初始包含块)
+
+- 只要position的值不是static就是开启了定位
+
+#### 固定定位
+
+- 将元素的position属性值设置为fixed则开启了元素的固定定位
+- 固定的定位也是一种绝对定位，所以固定定位的大部分特点都和绝对定位一样
+  - 唯一不同的是固定定位永远参照于浏览器的视口进行定位
+  - 固定定位的元素不会随网页的滚动条滚动
+
+#### 粘滞定位
+
+- 当元素的position属性设置为sticky时则开启了元素的沾滞定位
+- 沾滞定位和相对定位的特点基本一致，不同的是沾滞定位可以在元素到达某个位置时将其固定
+
+#### 绝对定位元素的布局
+
+水平布局
+
+​	left + margin-left + border-left + padding-left + width + padding-right + border-right + margin-right +right = 包含块内容区的宽度
+
+- 当我们开启了绝对定位后:
+
+  - 水平方向的布局等式就需要添加left 和 right 两个值
+
+  - 此时规则和之前一样只是多添加了两个值：
+
+    - 当发生过度约束：
+      - 如果9个值中没有 auto 则自动调整right的值以使等式满足
+      - 如果有auto 则自动调整auto的值使等式满足
+    - 可设置auto的值
+      - margin width left right
+    - 因为left 和 right 的值默认是auto，所以如果不知道left 和 right 则等式不满足时，会自动调整这两个值
+
+  - 垂直方向布局的等式也必须要满足
+
+    top + margin-top/bottom + padding-top/bottom + boder-top/bottom + height = 包含块的高度
+
+```html
+<div class="box1">
+    <div class="box2">
+        
+    </div>
+</div>
+```
+
+```css
+.box1{
+    width:500px;
+    heitht:200px;
+    background-color:#bfa;
+    position:relative;
+}
+.box2{
+    width:100px;
+    height:100px;
+    background-color:orange;
+    position:absolute;
+    margin:auto; /*通过调整magin+left,right,top,bottom值设置为0达到居中效果*/
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+}
+```
+
+#### 元素的层级
+
+- 对于开启了定位元素，可以通过z-index属性来指定元素的层级
+- z-index需要一个整数作为参数，值越大元素的层级越高，元素的层级越高越优先显示
+- 如果元素的层级一样，则优先显示靠下的元素
+- 祖先的元素的层级再高也不会盖住后代元素
+
+### 图标字体
+
+图标字体（iconfont)
+
+- 在网页中经常需要使用一些图标，可以通过图片来引入图标
+
+  但是图片大小本身较大，且使用不灵活
+
+- 可以在使用图标时，将图标设置为字体，通过font-face的形式来使用图标
+
+fontawsome 使用步骤
+
+ 1. 下载 官方网站https://fontawesome.com/
+
+ 2. 解压
+
+ 3. 将css和webfonts移动到项目中
+
+ 4. 将all.css引入到网页中
+
+ 5. 使用图标字体
+
+    - 直接通过类目来使用图标字体
+
+      class="fas fa-bell"
+
+      class="fab fa-accessible-icon"
+
+##### 通过伪元素设置图标字体
+
+1. 找到要设置图标的元素通过before或after选中
+
+2. 在content中设置字体的编码
+
+3. 设置字体的样式
+
+   fab
+
+   font-family : 'Font Awesome 5 Brands';
+
+   fas
+
+   font-family:'Font Awesome 5 Free';
+
+   font-weight:900;
+
+```css
+li::before{
+    content:'\f1b0';
+    font-family:'Font Awesome 5 Free';
+    font-weight:900;
+    color:blue;
+    margin-right:10px;
+}
+```
+
+
+
+##### 通过实体来使用图标字体
+
+&#x图标的编码；
+
+```html
+<span class="fas">&#xf0f3;</span>
+```
+
+#### 文本的样式
+
+##### text-align 
+
+- 文本的水平对齐
+  - left 左侧对齐
+  - right 右侧对齐
+  - center居中对齐
+  - justify 两端对齐
+
+##### vertical-align 
+
+- 设置元素垂直对齐的方式
+
+  - baseline 默认值 基线对齐
+  - top顶部对齐
+  - bottom 底部对齐
+  - middle 居中对齐
+
+  当在p标签插入某张图片时，因为图片属于替换元素，特点和字相同，所以图片对齐也是默认基线对齐，只要设置图片的vertical-align属性不是默认值即可把图片的缝隙给清除掉
+
+##### text-decoration
+
+- 设置文本修饰
+  - none 什么都没有
+  - underline下划线
+  - line-through 删除线
+  - overline 上划线
+
+##### white-space 
+
+- 设置网页如何处理空白
+  - normal 正常
+  - nowrap 不换行
+  - pre 保留空白
+
+```css
+.box2{
+    width:200px;
+    /*设置文本不换行*/
+    white-space:nowrap;
+    /*将溢出文本裁剪*/
+    overflow:hidden;
+    /*设置溢出样式为省略号 从而达到网站新闻简短接受带省略号的效果*/
+    text-overflow:ellipsis;
+        
+}
+```
+
