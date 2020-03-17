@@ -918,3 +918,136 @@ li::before{
 }
 ```
 
+### 图片
+
+#### 雪碧图
+
+- 将多个小图片统一保存到一个大图片中，然后通过调整background-position来显示相应的图片，这样图片就会同时加载到网页中，可以有效避免出现闪烁的问题
+
+- 这个技术应用十分广泛，被称为CSS-Sprite，称为雪碧图
+
+- 使用步骤：
+
+  1. 确定要使用的图标
+  2. 测量图标的大小
+  3. 根据测量结果创建一个元素
+  4. 将雪碧图设置为元素的背景图片
+  5. 设置一个偏移量以显示正确的图片
+
+- 雪碧图特点：
+
+  一次性将多个图片加载进页面，降低请求的次数，加快访问速度，提升用户体验
+
+#### 渐变
+
+##### 线性渐变
+
+- 颜色沿着一条直线发生变化
+
+  linear-gradient()
+
+  ```css
+  background-image:linear-gradient(red,yellow);
+  /*红色在开头，黄色在结尾，中间是过度区域*/
+  ```
+
+- 线性渐变的开头，可以指定一个渐变的方向
+
+  to left
+
+  to right
+
+  to bottom
+
+  to top
+
+  deg deg表示度数
+
+  turn表示圆
+
+- 渐变可以同时指定多个颜色，多个颜色默认情况下平均分布，也可以手动指定渐变分布情况
+
+  ```css
+  background-image:linear-gradient(red 50px,yellow);/*从50px开始过渡，之前都是红色*/
+  ```
+
+- repeating-linear-gradient() 可以平铺的线性渐变
+
+##### 径向渐变
+
+- radial-gradient() 径向渐变（放射性的效果）
+
+- 默认情况下径向渐变圆心的形状根据元素的形状来计算的
+
+  - 正方形-->圆形
+
+  - 长方形-->椭圆形
+
+  - 也可以手动指定径向渐变的大小
+
+    - circle
+    - ellipse
+    - 调整像素大小
+
+  - 也可以指定渐变的位置
+
+    - 语法：
+          radial-gradient(大小 at 位置, 颜色 位置 ,颜色 位置 ,颜色 位置)
+              大小：
+                  circle 圆形
+                  ellipse 椭圆
+                  closest-side 近边	
+                  closest-corner 近角
+                  farthest-side 远边
+                  farthest-corner 远角
+
+      ​		位置：
+      ​        	top right left center bottom
+
+  
+
+## 练习
+
+```css
+/*小米logo+切换效果*/
+
+/* 设置logo的h1 */
+.header .logo{
+    float: left;
+    margin-top: 22px;
+    width: 55px;
+    height: 55px;
+    position: relative;
+    overflow: hidden;
+    /* 隐藏logo中的文字 */
+    text-indent: -9999px
+}
+
+/* 统一设置logo的超链接 */
+.header .logo a{
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    left: 0;
+    background-color: #FF6700;
+    background-image: url(../img/mi-logo.png);
+    background-position: center;
+    transition: left 0.3s;
+}
+
+/* 设置home图片 */
+.header .logo .home{
+    background-image: url(../img/mi-home.png);
+    left: -55px;
+}
+
+/* 设置鼠标移入以后两个图标的位置 */
+.header .logo:hover .mi{
+    left: 55px;
+}
+
+.header .logo:hover .home{
+    left: 0;
+}
+```
+
