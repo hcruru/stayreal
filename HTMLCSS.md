@@ -1004,7 +1004,236 @@ li::before{
       ​		位置：
       ​        	top right left center bottom
 
+
+
+
+### animation
+
+#### 过渡（transition）
+
+- 通过过渡可以指定一个属性发生变化时的切换方式
+
+- 通过过渡可以创建一些非常好的效果，提升用户的体验
+
+- transition-property: 指定要执行过渡的属性 多个属性间使用,隔开 如果所有属性都需要过渡，则使用all关键字
+
+  大部分属性都支持过渡效果，注意过渡时必须是从一个有效数值向另外一个有效数值进行过渡
+
+- transition-duration: 指定过渡效果的持续时间
+
+​        时间单位：s 和 ms 1s = 1000ms
+
+​       /* transition-duration: 100ms, 2s; */
+
+​       /* transition-duration: 2s; */
+
+- transition-timing-function: 过渡的时序函数
+
+​        指定过渡的执行的方式 
+
+​        可选值：
+
+​          ease 默认值，慢速开始，先加速，再减速
+
+​          linear 匀速运动
+
+​          ease-in 加速运动
+
+​          ease-out 减速运动
+
+​          ease-in-out 先加速 后减速
+
+​          cubic-bezier() 来指定时序函数
+
+​            https://cubic-bezier.com
+
+​          steps() 分步执行过渡效果
+
+​            可以设置一个第二个值：
+
+​              end ， 在时间结束时执行过渡(默认值)
+
+​              start ， 在时间开始时执行过渡
+
+​       	/* transition-timing-function: cubic-bezier(.24,.95,.82,-0.88); */
+
+​       	/* transition-timing-function: steps(2, start); */
+
+- transition-delay: 过渡效果的延迟，等待一段时间后在执行过渡 
+- transition 可以同时设置过渡相关的所有属性，只有一个要求，如果要写延迟，则两个时间中第一个是持续时间，第二个是延迟  
+- transition:2s margin-left 1s cubic-bezier(.24,.95,.82,-0.88);
+
+
+
+#### 动画
+
+- 动画和过渡类似，都是可以实现一些动态的效果，不同的是过渡需要在某个属性发生变化时才会触发
+
+  动画可以自动触发动态效果
+
+- 设置动画效果，必须先要设置一个关键帧，关键帧设置了动画执行每一个步骤
+
+```css
+/* animation-name: 要对当前元素生效的关键帧的名字 */
+/* animation-name: test; */
+
+/* animation-duration: 动画的执行时间 */
+/* animation-duration: 4s; */
+
+            
+
+/* 动画的延时 */
+/* animation-delay: 2s; */
+
+/* animation-timing-function: ease-in-out; */
+
+/* 
+animation-iteration-count 动画执行的次数 
+可选值：
+次数
+infinite 无限执行
+*/
+/* animation-iteration-count: 1; */
+
+/*
+animation-direction
+指定动画运行的方向
+可选值：
+normal 默认值  从 from 向 to运行 每次都是这样 
+reverse 从 to 向 from 运行 每次都是这样 
+alternate 从 from 向 to运行 重复执行动画时反向执行
+alternate-reverse 从 to 向 from运行 重复执行动画时反向执行
+
+*/
+/* animation-direction: alternate-reverse; */
+
+/* 
+animation-play-state: 设置动画的执行状态 
+                可选值：
+                    running 默认值 动画执行
+                    paused 动画暂停
+            */
+            /* animation-play-state: paused; */
+
+            /* 
+            animation-fill-mode: 动画的填充模式
+                可选值：
+                    none 默认值 动画执行完毕元素回到原来位置
+                    forwards 动画执行完毕元素会停止在动画结束的位置
+                    backwards 动画延时等待时，元素就会处于开始位置
+                    both 结合了forwards 和 backwards
+            */
+            /* animation-fill-mode: both; */
+            animation: test 2s 2 1s alternate;
+
+            
+```
+
+
+
+#### 变形平移
+
+-  变形就是指通过CSS来改变元素的形状或位置
+  - 变形不会影响到页面的布局
+    - transform 用来设置元素的变形效果
+      - 平移：
+        translateX() 沿着x轴方向平移
+        translateY() 沿着y轴方向平移
+        translateZ() 沿着z轴方向平移
+        - 平移元素，百分比是相对于自身计算的   
+
+- 可以完成移入某个元素达到移动有点飘起来的效果
+
+  ```css
+  /*为box4设置一个移入效果*/
+  .box4{
+              width: 220px;
+              height: 300px;
+              background-color: #fff;
+              float: left;
+              margin: 0 10px;
+              transition:all .3s;
+          }
   
+  .box4:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .3)
+          }
+  ```
+
+
+
+#### Z轴平移
+
+- z轴平移，调整元素在z轴的位置，正常情况就是调整元素和人眼之间的距离，
+  - 距离越大，元素离人越近
+  - z轴平移属于立体效果（近大远小），默认情况下网页是不支持透视，如果需要看见效果，必须要设置网页的视距
+
+#### 缩放
+
+```css
+/* 变形的原点 默认值 center*/
+/* transform-origin:20px 20px;  */
+
+.box1:hover{
+        /* 
+            对元素进行缩放的函数：
+                scaleX() 水平方向缩放
+                scaleY() 垂直方向缩放
+                scale() 双方向的缩放
+        */
+        transform:scale(2)
+    }
+```
+### less
+
+- less是一门css的预处理语言
+  - less是一个css增强版，通过less可以编写更少的代码实现更强大的样式
+  - 在less中添加了许多的新特性：像对变量的支持、对mixin的支持……
+  - less语法大体上和css语法一直，但是less中
+
+```less
+
+//变量，在变量中可以存储一个任意的值
+// 并且我们可以在需要时，任意的修改变量中的值
+// 变量的语法： @变量名
+@a:200px;
+@b:#bfa;
+@c:box6;
+
+.box5{
+    //使用变量是，如果是直接使用则以 @变量名 的形式使用即可
+    width: @a;
+    color:@b;
+}
+
+//作为类名，或者一部分值使用时必须以 @{变量名} 的形式使用
+.@{c}{
+    width: @a;
+    background-image: url("@{c}/1.png");
+}
+
+@d:200px;
+@d:300px;
+
+div{
+    // 变量发生重名时，会优先使用比较近的变量
+    @d:115px;
+    width: @d;
+    height: @e;
+}
+
+//可以在变量声明前就使用变量
+@e:335px;
+```
+
+
+
+// 并且我们可以在需要时，任意的修改变量中的值
+
+// 变量的语法： @变量名
+
+
 
 ## 练习
 
@@ -1049,5 +1278,12 @@ li::before{
 .header .logo:hover .home{
     left: 0;
 }
+```
+
+```html
+<!-- 设置网站图标 -->
+在标题栏和收藏栏的网站图标
+网站图片一般都存储在网站的根目录下，名字一般都叫做favicon.ico
+<link rel="icon" href="./favicon.ico">
 ```
 
